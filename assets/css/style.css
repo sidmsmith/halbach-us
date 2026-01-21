@@ -776,17 +776,24 @@ body.loading {
 }
 .vidcontent {
   position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  top: 0 !important;
+  left: 0 !important;
   width: 100% !important;
+  height: 100% !important;
   text-align: center !important;
   z-index: 10 !important;
   margin-top: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 #main-slider.vidcontent {
   margin-top: 0 !important;
   position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 #main-slider .swiper-container {
   width: 100%;
@@ -804,8 +811,12 @@ body.loading {
 #main-slider .slide-content {
     margin-top: 0;
     text-align: center;
-    top: 35%;
     position: relative;
+    width: 100%;
+}
+#main-slider.vidcontent .slide-content {
+    top: auto;
+    margin-top: 0;
 }
 #main-slider .slide-title,
 #main-slider .slide-subtitle,
