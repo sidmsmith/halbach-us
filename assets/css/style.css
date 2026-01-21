@@ -853,11 +853,12 @@ body.loading {
   font-weight: 300;
 }
 #main-slider .slide-divider {
-  background-image: url('../images/home/slider-divider.png');
+  background-image: none;
   background-repeat: no-repeat;
   background-size: cover;
   height: 15px;
   width: 145px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   margin: 20px auto;
   position: relative;
 }
@@ -2622,17 +2623,18 @@ form.check-rooms.vertical .form-group > i.fa-caret-down {
 [4. Footer]
 --------------------------------------------------------------------*/
 footer {
-  padding-top: 50px;
+  padding-top: 30px;
   padding-bottom: 0px;
   background-color: #202935;
-  color: #59677a;
+  color: #fff;
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 footer .subtitle {
   color: #fff;
   font-family: 'Playfair Display', serif;
   text-transform: uppercase;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
   margin-bottom: 20px;
 }
@@ -2647,21 +2649,26 @@ footer ul.site-links {
 }
 footer ul.site-links li {
   list-style: none;
+  font-size: 16px;
 }
 
 footer a {
-  color: #59677a;
+  color: #fff;
   cursor: pointer;
+  font-size: 16px;
 }
 footer a:hover {
   color: #fff;
+  opacity: 0.8;
 }
 footer a:active,
 footer a:focus {
-  color: #59677a;
+  color: #fff;
 }
 footer p {
   margin-bottom: 5px !important;
+  color: #fff;
+  font-size: 16px;
 }
 footer .social-links {
   margin-bottom: 50px;
