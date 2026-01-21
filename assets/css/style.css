@@ -774,6 +774,20 @@ body.loading {
   text-align: center;
   margin-top: 30px;
 }
+.vidcontent {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  text-align: center !important;
+  z-index: 10 !important;
+  margin-top: 0 !important;
+}
+#main-slider.vidcontent {
+  margin-top: 0 !important;
+  position: absolute !important;
+}
 #main-slider .swiper-container {
   width: 100%;
 }
@@ -2597,7 +2611,7 @@ form.check-rooms.vertical .form-group > i.fa-caret-down {
 [4. Footer]
 --------------------------------------------------------------------*/
 footer {
-  padding-top: 100px;
+  padding-top: 50px;
   padding-bottom: 0px;
   background-color: #202935;
   color: #59677a;
