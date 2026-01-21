@@ -1,0 +1,446 @@
+#main-slider .slide-title {
+	font-family: 'Playfair Display', serif;
+	font-size: 65px;
+	text-transform: uppercase;
+	font-weight: 400;
+	text-shadow: 2px 2px 2px black;
+	color:#fbca37;
+}
+#main-slider .slide-subtitle {
+	font-family: fantasy;
+	font-weight: 500;
+	font-size: 34px;
+	line-height: 34px;
+	text-shadow: 2px 2px 2px black;
+	font-style: normal;
+	color: #fff;
+}
+#main-slider .slide-subtitle-italic {
+	font-family: fantasy;
+	font-weight: 500;
+	font-size: 34px;
+	line-height: 34px;
+	text-shadow: 2px 2px 2px black;
+	font-style: normal;
+	color: #fff;
+}
+.ashtbg1 {
+	background-color:#4bb9eb;
+	padding:15px 0px;
+	text-align:center;
+	font-size: 30px;
+	color:white;
+	text-shadow:2px 2px 2px black;
+	font-weight:600;
+	font-family: 'Playfair Display', serif;
+}
+.ashtbg2 {
+	background-color:#069797;
+	padding:15px 0px;
+	text-align:center;
+	font-size: 30px;
+	color:white;
+	text-shadow:2px 2px 2px black;
+	font-weight:600;
+	font-family: 'Playfair Display', serif;
+}
+.roomasht {
+	box-shadow: 0px 6px 11px 1px rgba(0, 0, 0, 0.51);
+	-moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.51);
+	-webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.51);
+	background:white;
+}
+.room-title-box {
+	padding: 0px 20px;
+	text-align: center;
+}
+.title .price {
+	color: #03a9f4;
+	display: inline-block;
+	padding-top:10px;
+	padding-bottom:10px
+}
+.title .price .number {
+	font-size: 30px;
+	font-weight: bold;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+.title .for-price {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight:800;
+	color:black;
+	font-size:15px;
+	margin-left: 6px;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+.protitle {
+	font-family: 'Roboto', sans-serif;
+	line-height: 40px;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	padding: 10px 0px;
+	margin-bottom: 10px;
+	color: #133676;
+	font-size: 26px;
+}
+.stat-bar span {
+	margin: 0px 15px;
+	width:auto;
+}
+.featured-property-button {
+	padding: 2px 0px 10px;
+	background-color: #133676;
+	line-height: 31px;
+	text-align: center;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.featured-property-button p {
+	margin-bottom: 0;
+	color: #fff;
+	font-weight: 500;
+	font-size: 20px;
+	font-family: 'Roboto', sans-serif;
+}
+.ravis-btn.btn-type-2 {
+	text-transform: uppercase;
+	line-height: 35px;
+	padding: 0 20px;
+	font-size: .9em;
+	color: #000;
+	cursor: pointer;
+	position: relative;
+	display: inline-block;
+-webkit-transition: all .3s ease;
+-o-transition: all .3s ease;
+transition: all .3s ease;
+	background: none;
+}
+.ravis-btn.btn-type-2:after, .ravis-btn.btn-type-2:before {
+	display: block;
+-webkit-transition: all .3s ease;
+-o-transition: all .3s ease;
+transition: all .3s ease;
+	content: '';
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 10px;
+	border: 2px solid #fbbb00;
+}
+.ravis-btn.btn-type-2:after {
+	bottom: 0;
+	border-top: 0;
+}
+.ravis-btn.btn-type-2:before {
+	top: 0;
+	border-bottom: 0;
+}
+.ravis-btn.btn-type-2:hover {
+	background: rgba(255, 255, 255, .5);
+}
+.animated-box {
+	margin:10px 0px;
+}
+.video-img {
+	position: relative;
+	box-shadow: 2px 2px 2px #ddd;
+}
+.game {
+	height: 350px;
+	overflow: hidden;
+}
+.game a img {
+	height: 100%;
+	width:100%;
+}
+.featured-property-button {
+	background-color: #133676;
+	text-align: center;
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+.ashtsubtitle {
+	font-family: 'Roboto', sans-serif;
+	text-align: center;
+	color: #0aa5eb;
+	font-size: 18px;
+}
+i.fa {
+	color:#5f5b5b;
+}
+.roomasht:hover {
+	box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.33), 0 -1px 11px 0 rgba(0, 0, 0, 0.33);
+}
+.section-from-blog .blog-box .blog-meta-box .blog-title {
+	font-family: 'Playfair Display', serif;
+	text-transform: uppercase;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.5;
+	background: #133676;
+	text-shadow: 1px 1px 1px black;
+	color: white;
+	padding: 10px;
+	width: 100%;
+	box-shadow: 2px 2px 2px #a9a9a9;
+}
+.section-from-blog .blog-box .blog-meta-box {
+	position: absolute;
+	bottom: inherit;
+	padding: 0px 40px 20px 0px;
+	top: 0;
+}
+.section-from-blog .blog-box {
+	box-shadow: 2px 2px 6px #c7c7c7;
+}
+.section-from-blog .blog-box:hover {
+	box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.33), 0 -1px 11px 0 rgba(0, 0, 0, 0.33);
+}
+.section-from-blog .blog-box a:hover img {
+	opacity: 1;
+}
+.gallpan {
+	background: linear-gradient( rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.5)), url(back-beach.jpg);
+	padding: 25px 0px 30px 0px;
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: bottom;
+}
+.button.transparent {
+	background-color: #2196F3;
+	color: #fff;
+	border: 1px solid #068bc7;
+}
+.button.transparent:hover {
+	color:white;
+}
+.sale-off.banner-round {
+	background: rgba(255, 255, 255, .8);
+	height: 320px;
+	border-radius: 50%;
+	padding: 35px 0;
+	box-shadow: 0px 3px 15px #000;
+}
+.sale-off {
+	width: 320px;
+	margin: 0 auto;
+	text-align: center;
+	padding: 55px 0;
+	position: relative;
+}
+.sale-off p.heading {
+	font-family: 'Playfair Display', serif;
+	font-size: 35px;
+	font-weight: bold;
+	margin: 0;
+	line-height: 50px;
+	color: #03A9F4;
+	text-shadow: 1px 1px 0px #525252;
+}
+.footitle {
+	font-size: 35px;
+	line-height: 40px;
+	color: white;
+	font-weight: 900;
+	text-shadow: 1px 1px 1px black;
+}
+.footdes {
+	font-size:18px;
+	font-weight:900;
+	text-shadow:1px 1px 1px black;
+	color:white;
+}
+.book-pan .footdes a {
+	background: transparent;
+	border-color: #d5100000;
+	color: white;
+	text-decoration:underline;
+}
+.book-pan .footdes a:hover {
+	background: transparent;
+	color: white;
+	text-decoration:underline;
+}
+footer a {
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+	font-family: 'Roboto', sans-serif;
+}
+footer {
+	padding-top: 30px;
+}
+footer p {
+	margin-bottom: 5px !important;
+	color: white;
+}
+.sale-off p.title {
+	margin: 0;
+	font-family: -webkit-body;
+}
+#menu-toggle {
+	z-index:9999;
+	top:-13px;
+}
+ @media only screen and (max-width: 600px) {
+#main-slider .slide-content .slide-title {
+font-size: 28px !important;
+}
+#main-slider .slide-content {
+margin-top: 10px !important;
+}
+#main-slider .slide-divider {
+display:none !important;
+margin: auto !important;
+}
+.content {
+text-align: justify !important;
+}
+.properties {
+padding: 0px 0px 0px 0px !important;
+}
+.section-breadcrumb {
+margin-top: 35px !important;
+}
+.title {
+font-size:20px !important;
+}
+.property h2 {
+font-size:15px !important;
+}
+
+.responsive-table tbody th[scope="row"] {
+text-align: left !important;
+}
+.panel-body ul .ashtli {
+width: 100% !important;
+}
+.space {
+margin-bottom:30px !important;
+}
+}
+.YTPOverlay.raster {
+	background:none !important;
+}
+.vidcontent {
+	position: absolute !important;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width:100%;
+	text-align:center;
+}
+.ashtshd {
+	font-family: 'Trajan Pro';
+	color: #ffffff;
+	font-size: 31px;
+	font-weight: 900;
+	text-shadow: 1px 1px 1px #000000;
+	margin-left: 12%;
+}
+.ashtshd1 {
+	font-family: 'MrDafoe-Regular';
+	color:white;
+	font-size:180px;
+	line-height:120px;
+	text-shadow: 1px 1px 1px #000000;
+}
+ @media (max-width:500px) {
+ #myPlayer {
+height: 50vh !important;
+}
+}
+ @media (max-width:1120px) {
+ .protitle {
+height: 43px;
+font-size:21px;
+}
+}
+.sidbtn {
+	position: absolute;
+	bottom: 1%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+ @media screen and (max-width: 450px) {
+.slide-subtitle-italic {
+padding-left:30px;
+}
+}
+ @media screen and (max-width: 375px) {
+.slide-subtitle-italic {
+font-size: 16px !important;
+position: absolute;
+top: 114px !important;
+line-height: 23px !important;
+padding-left:30px;
+}
+.sale-off.banner-round {
+width:333px;
+height:333px;
+right:12%;
+}
+}
+ @media screen and (max-width: 500px) 
+
+ {
+#sidproclick {
+position: absolute;
+top: -28px;
+left: -39px;
+}
+
+.logo-link h2
+{
+   font-size: 15px !important; 
+}
+
+header #menu-toggle .bar
+{
+	width: 30px;
+}
+
+}
+ @media screen and (max-width: 450px) 
+
+ {
+.sale-off.banner-round {
+width:333px;
+height:333px;
+}
+}
+ @media screen and (max-width: 320px) {
+.sale-off.banner-round {
+width:300px;
+height:300px;
+}
+ .book-pan p.off {
+font-size: 24px;
+margin: 0px 0 6px;
+}
+ .hvr-float {
+width: 38% !important;
+height: 16% !important;
+right:12%;
+}
+}
+.section-from-blog {
+	background: linear-gradient( rgb(255 236 236 / 86%), rgb(249 212 212 / 50%)), url(back-beach.jpg);
+}
+
+#abt-page, #attra-details
+{
+	padding: 60px 0px;
+}
+
+.breadcrumb
+{
+	display: flex;
+	justify-content: center;
+}
+
+
