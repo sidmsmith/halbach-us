@@ -1430,7 +1430,7 @@ section.section-style-2 {
   height: 100%;
   z-index: 0;
   opacity: 0.9;
-  background-image: url('../img/beach.png');
+  background-image: url('../images/beach.png');
   background-repeat: no-repeat;
   background-position: 50% 60%;
   -ms-background-size: cover;
