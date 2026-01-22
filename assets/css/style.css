@@ -4424,4 +4424,70 @@ a.carousel-control.right
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 20 !important;
+}
+
+/* Video overlay text – screenshot 1 styling */
+#main-slider.vidcontent .slide-subtitle-video {
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  color: #fff !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+  letter-spacing: 0.5px;
+}
+#main-slider.vidcontent .slide-title-video {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 100px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  line-height: 1.1 !important;
+  margin: 0;
+}
+#main-slider.vidcontent .slide-title-video strong {
+  background: linear-gradient(180deg, #f5d76e 0%, #e8a838 50%, #d68910 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: none !important;
+  filter: drop-shadow(3px 4px 2px rgba(0,0,0,0.8)) !important;
+}
+#main-slider.vidcontent .slide-divider-video {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 20px auto !important;
+  border: none !important;
+  background: none !important;
+}
+#main-slider.vidcontent .slide-divider-video .divider-line {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: rgba(90,90,90,0.9);
+}
+#main-slider.vidcontent .slide-divider-video .divider-slash {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(90,90,90,0.9);
+  letter-spacing: 1px;
+}
+#main-slider.vidcontent .slide-subtitle-italic-video {
+  font-family: 'Roboto', sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  color: #fff !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+  letter-spacing: 0.5px;
+}
+@media only screen and (max-width: 991px) {
+  #main-slider.vidcontent .slide-title-video { font-size: 60px !important; }
+}
+@media only screen and (max-width: 767px) {
+  #main-slider.vidcontent .slide-title-video { font-size: 42px !important; }
+  #main-slider.vidcontent .slide-subtitle-italic-video { font-size: 16px !important; }
 }	
