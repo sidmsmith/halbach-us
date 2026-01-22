@@ -4415,4 +4415,13 @@ a.carousel-control.right
 {
 	top:36%;	
 }
+}
+
+/* Animated arrows circle positioning */
+.sidbtn {
+  position: absolute !important;
+  bottom: 30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 20 !important;
 }	
