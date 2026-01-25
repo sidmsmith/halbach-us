@@ -1422,6 +1422,12 @@ Our condominium includes an in-unit laundry, appliances, and other amenities to 
                                             <span style="font-size: 14px; color: #000;">Booked</span>
                                         </div>
                                     </div>
+                                    <div id="availability-status" style="margin-top: 10px; font-size: 14px; color: #666;">
+                                        Loading live availability…
+                                    </div>
+                                    <div style="margin-top: 6px; font-size: 12px; color: #777;">
+                                        Source: <a href="https://www.floridarentals.com/calendar/ical/545/9d3867fe29b3bb2429cc1bbd37f06e01.ics" target="_blank" rel="noopener noreferrer">FloridaRentals iCal</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1486,6 +1492,7 @@ Our condominium includes an in-unit laundry, appliances, and other amenities to 
                             
                             const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                             const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                            const pad2 = (n) => String(n).padStart(2, '0');
                             
                             function renderCalendar(monthOffset, containerId, monthLabelId) {
                                 const date = new Date(currentDate);
@@ -1512,7 +1519,8 @@ Our condominium includes an in-unit laundry, appliances, and other amenities to 
                                 }
                                 
                                 for (let day = 1; day <= daysInMonth; day++) {
-                                    const isBooked = Math.random() > 0.7;
+                                    const dateStr = year + '-' + pad2(month + 1) + '-' + pad2(day);
+                                    const isBooked = !!(window.__HALBACH_BLOCKED_DATES_SET__ && window.__HALBACH_BLOCKED_DATES_SET__.has(dateStr));
                                     html += '<div class="calendar-day' + (isBooked ? ' booked' : '') + '">' + day + '</div>';
                                 }
                                 
@@ -1524,6 +1532,9 @@ Our condominium includes an in-unit laundry, appliances, and other amenities to 
                                 renderCalendar(0, 'calendar1', 'month1');
                                 renderCalendar(1, 'calendar2', 'month2');
                             }
+
+                            // Expose for iCal integration below
+                            window.__HALBACH_UPDATE_CALENDARS__ = updateCalendars;
                             
                             document.getElementById('prev-month').addEventListener('click', function() {
                                 currentDate.setMonth(currentDate.getMonth() - 1);
@@ -2118,17 +2129,16 @@ $('html, body').animate({scrollTop: $('#move-down').offset().top -50 }, 'slow');
 
 <script type="text/javascript">
 
-var checkin = [];
-	var checkout = [];
+window.__HALBACH_BLOCKED_DATES_SET__ = window.__HALBACH_BLOCKED_DATES_SET__ || new Set();
 
     $(function() {
         $("#txtFrom").datepicker({
             numberOfMonths: 1,
-            minDate: '@minDate',
+            minDate: 0,
             dateFormat: 'yy-mm-dd',
             beforeShowDay: function(date) {
                 var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                return [checkin.indexOf(string) == -1];
+                return [!window.__HALBACH_BLOCKED_DATES_SET__.has(string)];
 
             },
 
@@ -2150,7 +2160,7 @@ var checkin = [];
 
                 var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
 
-                return [checkout.indexOf(string) == -1]
+                return [!window.__HALBACH_BLOCKED_DATES_SET__.has(string)]
 
             },
 
@@ -2164,6 +2174,34 @@ var checkin = [];
                 $('.popover-1').addClass('opened');
             }
         });
+
+        function setAvailabilityStatus(text) {
+            var $el = $("#availability-status");
+            if ($el.length) $el.text(text);
+        }
+
+        function applyBlockedDates(dateStrings) {
+            window.__HALBACH_BLOCKED_DATES_SET__ = new Set(dateStrings || []);
+
+            if ($("#txtFrom").data("datepicker")) $("#txtFrom").datepicker("refresh");
+            if ($("#txtTo").data("datepicker")) $("#txtTo").datepicker("refresh");
+            if (window.__HALBACH_UPDATE_CALENDARS__) window.__HALBACH_UPDATE_CALENDARS__();
+        }
+
+        function loadAvailabilityFromIcal() {
+            setAvailabilityStatus("Loading live availability…");
+            $.getJSON("/api/availability")
+                .done(function(data) {
+                    var blocked = (data && data.blockedDates) ? data.blockedDates : [];
+                    applyBlockedDates(blocked);
+                    setAvailabilityStatus("Live availability loaded (" + blocked.length + " blocked days)");
+                })
+                .fail(function() {
+                    setAvailabilityStatus("Unable to load live availability right now.");
+                });
+        }
+
+        loadAvailabilityFromIcal();
     });
 	
 </script> 
