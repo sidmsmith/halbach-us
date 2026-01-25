@@ -1,4 +1,5 @@
 const https = require("https");
+const { URL } = require("url");
 
 const SOURCE_ICS_URL =
   "https://www.floridarentals.com/calendar/ical/545/9d3867fe29b3bb2429cc1bbd37f06e01.ics";
@@ -50,9 +51,13 @@ function extractValue(line) {
   return idx >= 0 ? line.slice(idx + 1).trim() : "";
 }
 
-function parseDateValue(dateValue) {
-  // DATE-only, e.g. 20260131 (DTEND is exclusive in iCal)
-  const m = /^(\d{4})(\d{2})(\d{2})$/.exec(dateValue);
+function parseIcalDateValue(dateValue) {
+  // Supports:
+  // - DATE-only: 20260131
+  // - DATE-TIME: 20260131T120000Z (we treat as that day)
+  if (!dateValue) return null;
+  const ymd = String(dateValue).slice(0, 8);
+  const m = /^(\d{4})(\d{2})(\d{2})$/.exec(ymd);
   if (!m) return null;
   return new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
 }
@@ -68,6 +73,26 @@ function addDaysUTC(d, days) {
   const nd = new Date(d.getTime());
   nd.setUTCDate(nd.getUTCDate() + days);
   return nd;
+}
+
+function addMonthsUTC(d, months) {
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, d.getUTCDate()));
+}
+
+function startOfUtcDay(d) {
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+}
+
+function getMonthsForward(req, defaultMonths) {
+  try {
+    const u = new URL(req.url || "", `https://${req.headers && req.headers.host ? req.headers.host : "localhost"}`);
+    const v = u.searchParams.get("monthsForward");
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0 && n <= 36) return Math.floor(n);
+  } catch {
+    // ignore
+  }
+  return defaultMonths;
 }
 
 function parseIcsEvents(icsText) {
@@ -100,16 +125,33 @@ module.exports = async function handler(req, res) {
     const icsText = await fetchText(SOURCE_ICS_URL);
     const events = parseIcsEvents(icsText);
 
+    const monthsForward = getMonthsForward(req, 18);
+    const rangeStart = startOfUtcDay(new Date());
+    const rangeEndExclusive = addMonthsUTC(rangeStart, monthsForward);
+
     const blockedRanges = [];
     const blockedDates = new Set();
+    let feedMaxEndExclusive = null;
 
     for (const e of events) {
-      const summary = (e.summary || "").toLowerCase();
-      if (!summary.includes("blocked")) continue;
+      const summary = String(e.summary || "");
+      // In availability feeds, VEVENTs are typically "unavailable" periods.
+      // If an event explicitly says "Available", ignore it.
+      if (/available/i.test(summary)) continue;
 
-      const start = parseDateValue(e.dtstart);
-      const endExclusive = parseDateValue(e.dtend);
+      const start = parseIcalDateValue(e.dtstart);
+      const endExclusive = parseIcalDateValue(e.dtend);
       if (!start || !endExclusive) continue;
+
+      if (!feedMaxEndExclusive || endExclusive > feedMaxEndExclusive) {
+        feedMaxEndExclusive = endExclusive;
+      }
+
+      // Clip to requested forward range to keep payload small and relevant
+      if (endExclusive <= rangeStart || start >= rangeEndExclusive) continue;
+
+      const clippedStart = start < rangeStart ? rangeStart : start;
+      const clippedEndExclusive = endExclusive > rangeEndExclusive ? rangeEndExclusive : endExclusive;
 
       blockedRanges.push({
         start: formatDateUTC(start),
@@ -117,7 +159,7 @@ module.exports = async function handler(req, res) {
         summary: e.summary || "Blocked",
       });
 
-      for (let d = start; d < endExclusive; d = addDaysUTC(d, 1)) {
+      for (let d = clippedStart; d < clippedEndExclusive; d = addDaysUTC(d, 1)) {
         blockedDates.add(formatDateUTC(d));
       }
     }
@@ -129,6 +171,10 @@ module.exports = async function handler(req, res) {
       JSON.stringify({
         source: SOURCE_ICS_URL,
         generatedAt: new Date().toISOString(),
+        monthsForward,
+        rangeStart: formatDateUTC(rangeStart),
+        rangeEndExclusive: formatDateUTC(rangeEndExclusive),
+        feedMaxEndExclusive: feedMaxEndExclusive ? formatDateUTC(feedMaxEndExclusive) : null,
         blockedDates: Array.from(blockedDates).sort(),
         blockedRanges,
       })

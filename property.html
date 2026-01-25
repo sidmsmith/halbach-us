@@ -2190,11 +2190,24 @@ window.__HALBACH_BLOCKED_DATES_SET__ = window.__HALBACH_BLOCKED_DATES_SET__ || n
 
         function loadAvailabilityFromIcal() {
             setAvailabilityStatus("Loading live availability…");
-            $.getJSON("/api/availability")
+            $.getJSON("/api/availability?monthsForward=18")
                 .done(function(data) {
                     var blocked = (data && data.blockedDates) ? data.blockedDates : [];
                     applyBlockedDates(blocked);
-                    setAvailabilityStatus("Live availability loaded (" + blocked.length + " blocked days)");
+                    var lastBlocked = blocked.length ? blocked[blocked.length - 1] : null;
+                    var feedMax = (data && data.feedMaxEndExclusive) ? data.feedMaxEndExclusive : null;
+                    var rangeEnd = (data && data.rangeEndExclusive) ? data.rangeEndExclusive : null;
+
+                    var msg = "Live availability loaded (" + blocked.length + " blocked days)";
+                    if (lastBlocked) msg += " • last blocked: " + lastBlocked;
+                    if (feedMax) msg += " • feed through: " + feedMax;
+
+                    // If the feed doesn't contain events out to the requested horizon, call it out explicitly
+                    if (feedMax && rangeEnd && feedMax < rangeEnd) {
+                        msg += " • no iCal events beyond " + feedMax;
+                    }
+
+                    setAvailabilityStatus(msg);
                 })
                 .fail(function() {
                     setAvailabilityStatus("Unable to load live availability right now.");
