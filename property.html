@@ -2115,6 +2115,19 @@ $('html, body').animate({scrollTop: $('#move-down').offset().top -50 }, 'slow');
 <script src="assets/js/jquery-ui.min.js"></script>
 <link href="assets/css/jquery1-ui.css" type="text/css" rel="stylesheet" />
 
+<style>
+/* Book Now datepicker: shade available dates light green */
+.ui-datepicker td.available-date a.ui-state-default {
+    background: #d9f7d9 !important;
+    border: 1px solid #9ad69a !important;
+    color: #1f4d1f !important;
+}
+.ui-datepicker td.available-date a.ui-state-default:hover {
+    background: #c6f0c6 !important;
+    border-color: #7bc87b !important;
+}
+</style>
+
 
 
 <script type="text/javascript">
@@ -2128,7 +2141,8 @@ window.__HALBACH_BLOCKED_DATES_SET__ = window.__HALBACH_BLOCKED_DATES_SET__ || n
             dateFormat: 'yy-mm-dd',
             beforeShowDay: function(date) {
                 var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                return [!window.__HALBACH_BLOCKED_DATES_SET__.has(string)];
+                var isBlocked = window.__HALBACH_BLOCKED_DATES_SET__.has(string);
+                return [!isBlocked, isBlocked ? "" : "available-date"];
 
             },
 
@@ -2150,7 +2164,8 @@ window.__HALBACH_BLOCKED_DATES_SET__ = window.__HALBACH_BLOCKED_DATES_SET__ || n
 
                 var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
 
-                return [!window.__HALBACH_BLOCKED_DATES_SET__.has(string)]
+                var isBlocked = window.__HALBACH_BLOCKED_DATES_SET__.has(string);
+                return [!isBlocked, isBlocked ? "" : "available-date"]
 
             },
 
