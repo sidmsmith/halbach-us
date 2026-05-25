@@ -16,6 +16,8 @@
   var availabilityLoaded = false;
   var ratesLoadError = null;
   var availabilityLoadError = null;
+  var ratesFetchSettled = false;
+  var availabilityFetchSettled = false;
   var lastSyncAt = null;
 
   var selection = null;
@@ -279,29 +281,57 @@
       cell.removeAttribute('title');
       cell.removeAttribute('aria-disabled');
 
-      if (isBlocked(dateStr)) {
+      if (availabilityLoaded && isBlocked(dateStr)) {
         cell.classList.add('unavailable');
         cell.setAttribute('aria-disabled', 'true');
         cell.title = 'Not available';
         return;
       }
 
-      if (!hasRate(dateStr)) {
-        cell.classList.add('no-rate');
-        cell.setAttribute('aria-disabled', 'true');
-        cell.title = 'Rate not available';
-        return;
-      }
+      if (ratesLoaded) {
+        if (!hasRate(dateStr)) {
+          cell.classList.add('no-rate');
+          cell.setAttribute('aria-disabled', 'true');
+          cell.title = 'Rate not available';
+          return;
+        }
 
-      cell.classList.add('has-rate');
-      cell.title = '$' + getRate(dateStr) + ' per night';
+        cell.classList.add('has-rate');
+        cell.title = '$' + getRate(dateStr) + ' per night';
+      }
     });
   }
 
-  function updateLastSyncLabel() {
-    if (lastSyncEl) {
-      lastSyncEl.textContent = formatLastSync(lastSyncAt);
+  function updateAvailabilityMetaLabel() {
+    if (!lastSyncEl) {
+      return;
     }
+    if (!availabilityFetchSettled) {
+      lastSyncEl.textContent = 'Loading\u2026';
+      return;
+    }
+    if (availabilityLoadError) {
+      lastSyncEl.textContent = 'Could not load';
+      return;
+    }
+    lastSyncEl.textContent = formatLastSync(lastSyncAt);
+  }
+
+  function finalizeCalendarLoad() {
+    if (!ratesFetchSettled || !availabilityFetchSettled) {
+      return;
+    }
+
+    calendarColEl.classList.remove('is-loading-rates');
+    updateAvailabilityMetaLabel();
+
+    if (ratesLoaded || availabilityLoaded) {
+      applyDayStatesToCalendar();
+      clearSelectionIfInvalid();
+      highlightSelection('');
+    }
+
+    renderCosts();
   }
 
   function getWeekIndexInSelection(clickedWeekStart) {
@@ -465,11 +495,31 @@
   function renderCosts() {
     var range = getSelectionRange();
 
-    if (!ratesLoaded || !availabilityLoaded) {
+    if (!ratesFetchSettled || !availabilityFetchSettled) {
       panelEl.classList.add('is-empty');
-      weekDatesEl.textContent = (ratesLoadError || availabilityLoadError)
-        ? 'Unable to load calendar data. Try again later.'
-        : 'Loading rates and availability\u2026';
+      weekDatesEl.textContent = 'Loading rates and availability\u2026';
+      setText('weeks-count-label', '0 weeks');
+      setText('nights-count-label', '0');
+      setText('rates-rental', '\u2014');
+      setText('rates-cleaning', '\u2014');
+      setText('rates-processing', '\u2014');
+      setText('rates-pet', '$0.00');
+      setText('rates-subtotal', '\u2014');
+      setText('rates-tax', '\u2014');
+      setText('rates-total', '\u2014');
+      setText('rates-deposit', '\u2014');
+      setText('rates-remaining', '\u2014');
+      if (petCheckbox) {
+        petCheckbox.checked = false;
+        petCheckbox.disabled = true;
+      }
+      return;
+    }
+
+    if (ratesLoadError && availabilityLoadError) {
+      panelEl.classList.add('is-empty');
+      weekDatesEl.textContent =
+        'Unable to load calendar data. Set DATABASE_URL in Vercel and redeploy.';
       setText('weeks-count-label', '0 weeks');
       setText('nights-count-label', '0');
       setText('rates-rental', '\u2014');
@@ -554,13 +604,6 @@
     }
   }
 
-  function onCalendarDataLoaded() {
-    applyDayStatesToCalendar();
-    clearSelectionIfInvalid();
-    highlightSelection('');
-    renderCosts();
-  }
-
   function loadRates() {
     calendarColEl.classList.add('is-loading-rates');
     renderCosts();
@@ -576,27 +619,19 @@
         ratesMap = data.rates || {};
         ratesLoaded = true;
         ratesLoadError = null;
-        if (ratesLoaded && availabilityLoaded) {
-          onCalendarDataLoaded();
-        }
       })
       .catch(function (err) {
         console.error('Failed to load rates:', err);
         ratesLoadError = err;
         ratesLoaded = false;
-        renderCosts();
       })
       .finally(function () {
-        if (availabilityLoaded || availabilityLoadError || ratesLoadError) {
-          calendarColEl.classList.remove('is-loading-rates');
-        }
+        ratesFetchSettled = true;
+        finalizeCalendarLoad();
       });
   }
 
   function loadAvailability() {
-    calendarColEl.classList.add('is-loading-rates');
-    renderCosts();
-
     return fetch(buildRangeApiUrl(getAvailabilityApiUrl()))
       .then(function (res) {
         if (!res.ok) {
@@ -612,21 +647,15 @@
         lastSyncAt = data.lastSyncAt || null;
         availabilityLoaded = true;
         availabilityLoadError = null;
-        updateLastSyncLabel();
-        if (ratesLoaded && availabilityLoaded) {
-          onCalendarDataLoaded();
-        }
       })
       .catch(function (err) {
         console.error('Failed to load availability:', err);
         availabilityLoadError = err;
         availabilityLoaded = false;
-        renderCosts();
       })
       .finally(function () {
-        if (ratesLoaded || ratesLoadError || availabilityLoadError) {
-          calendarColEl.classList.remove('is-loading-rates');
-        }
+        availabilityFetchSettled = true;
+        finalizeCalendarLoad();
       });
   }
 
@@ -728,6 +757,7 @@
 
   updateLabels();
   buildCalendars();
+  updateAvailabilityMetaLabel();
   renderCosts();
   loadRates();
   loadAvailability();

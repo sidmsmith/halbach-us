@@ -2,6 +2,17 @@
 
 Deploy this repo root to [Vercel](https://vercel.com). The site is live at [https://halbach-us.vercel.app/](https://halbach-us.vercel.app/).
 
+## Fix: calendar stuck on "Loading" or no grey/stripe dates
+
+Both `/api/rates` and `/api/availability` need **`DATABASE_URL`** on Vercel. Without it they return HTTP 500 and the calendar cannot load data.
+
+1. [Neon console](https://console.neon.tech) → your project → **Connect** → copy the connection string (pooler URL recommended).
+2. [Vercel dashboard](https://vercel.com) → **halbach-us** → **Settings** → **Environment Variables**
+3. Add `DATABASE_URL` = `postgresql://...` for **Production**, **Preview**, and **Development**
+4. **Deployments** → latest deployment → **⋯** → **Redeploy** (required after adding env vars)
+
+Verify: open `https://halbach-us.vercel.app/api/rates?from=2026-06-01&to=2026-06-07` — you should see JSON with `"rates": { ... }`, not `{"error":"Failed to load rates"}`.
+
 ## Environment variables (Vercel → Settings → Environment Variables)
 
 | Variable | Required | Notes |
