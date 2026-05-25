@@ -8,12 +8,13 @@ Deploy this repo root to [Vercel](https://vercel.com). The site is live at [http
 |----------|----------|--------|
 | `NEON_DATABASE_URL` | Yes | Neon Postgres connection string (same project as `halbach_rates`) |
 | `PLUMLEE_UNIT_URL` | No | Defaults to Sand Castle II Plumlee listing |
+| `AWS_LAMBDA_JS_RUNTIME` | For sync | Value: `nodejs22.x` — required for refresh/cron Chromium on Vercel |
 
 Apply to **Production**, **Preview**, and **Development**, then **Redeploy**.
 
 `DATABASE_URL` is still accepted locally as a fallback, but Vercel should use `NEON_DATABASE_URL`.
 
-No other env vars are required. Hourly cron runs without `CRON_SECRET`.
+Hourly cron and manual refresh need no `CRON_SECRET`.
 
 ## Fix: calendar stuck on "Loading" or no grey/stripe dates
 
