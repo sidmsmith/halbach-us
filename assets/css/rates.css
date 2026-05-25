@@ -1,0 +1,525 @@
+/* Rates page — calendar, pricing panel, availability sync */
+
+.rates-page-section {
+  padding: 1.5rem 0 3rem;
+  background: #f3f3f3;
+}
+
+.rates-page-section .rates-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rates-intro {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: #616161;
+  font-size: 1rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rates-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(380px, 32vw, 560px);
+  gap: 1rem;
+  align-items: start;
+  width: 100%;
+  padding: 0 0.75rem;
+  box-sizing: border-box;
+}
+
+.rates-calendar-col {
+  min-width: 0;
+  width: 100%;
+}
+
+.rates-availability-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding: 0 1rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: #59677a;
+}
+
+.rates-sync-btn {
+  border: none;
+  background: transparent;
+  color: #069797;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.rates-sync-btn:hover,
+.rates-sync-btn:focus {
+  color: #047676;
+}
+
+.rates-sync-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rates-sync-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 41, 53, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.rates-sync-modal-backdrop.is-open {
+  display: flex;
+}
+
+.rates-sync-modal {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 420px;
+  width: 100%;
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(32, 41, 53, 0.2);
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+}
+
+.rates-sync-modal h4 {
+  font-family: 'Playfair Display', serif;
+  color: #069797;
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+}
+
+.rates-sync-modal p {
+  margin: 0 0 1.25rem;
+  color: #616161;
+  line-height: 1.5;
+}
+
+.rates-sync-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.rates-sync-modal-actions button {
+  border: none;
+  border-radius: 4px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.rates-sync-modal-ok {
+  background: #069797;
+  color: #fff;
+}
+
+.rates-sync-modal-cancel {
+  background: #eef2f4;
+  color: #59677a;
+}
+
+.rates-sync-modal.is-busy .rates-sync-modal-actions {
+  display: none;
+}
+
+.rates-sync-modal-spinner {
+  display: none;
+  margin-top: 0.5rem;
+  color: #069797;
+  font-weight: 700;
+}
+
+.rates-sync-modal.is-busy .rates-sync-modal-spinner {
+  display: block;
+}
+
+.rates-year-block {
+  margin-bottom: 2rem;
+}
+
+.rates-year-block:last-child {
+  margin-bottom: 0;
+}
+
+.rates-year-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #03a9f4;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 0.35rem;
+  letter-spacing: 1px;
+}
+
+.rates-year-subtitle {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: #59677a;
+  text-align: center;
+  margin: 0 0 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rates-year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.2vw, 1.25rem);
+  width: 100%;
+}
+
+.rates-month-card {
+  background: #fff;
+  border: 1px solid #d8e8ec;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.rates-month-header {
+  background: linear-gradient(135deg, #069797, #4bb9eb);
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 1.05vw, 1.15rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.4rem 0.35rem;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+}
+
+.rates-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: rgba(6, 151, 151, 0.08);
+  font-family: 'Lato', sans-serif;
+  font-size: clamp(0.65rem, 0.72vw, 0.78rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #069797;
+  text-align: center;
+  padding: 0.2rem 0;
+  line-height: 1.2;
+}
+
+.rates-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0.15rem 0.2rem 0.2rem;
+  gap: 0;
+}
+
+.rates-day {
+  height: clamp(1.9rem, 2.1vw, 2.45rem);
+  width: clamp(1.9rem, 2.1vw, 2.45rem);
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lato', sans-serif;
+  font-size: clamp(0.88rem, 0.95vw, 1.08rem);
+  line-height: 1;
+  color: #616161;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+
+.rates-day.empty {
+  cursor: default;
+  height: clamp(1.9rem, 2.1vw, 2.45rem);
+  width: auto;
+  margin: 0;
+}
+
+.rates-day.no-rate {
+  background: #e6e6e6;
+  color: #b0b0b0;
+  cursor: not-allowed;
+  font-weight: 400;
+}
+
+.rates-day.no-rate:hover {
+  background: #e6e6e6;
+}
+
+.rates-day.no-rate.saturday {
+  color: #b8c4c4;
+}
+
+.rates-day.unavailable {
+  background: repeating-linear-gradient(
+    -45deg,
+    #dddddd,
+    #dddddd 3px,
+    #f0f0f0 3px,
+    #f0f0f0 6px
+  );
+  color: #999999;
+  cursor: not-allowed;
+  font-weight: 400;
+}
+
+.rates-day.unavailable:hover {
+  background: repeating-linear-gradient(
+    -45deg,
+    #dddddd,
+    #dddddd 3px,
+    #f0f0f0 3px,
+    #f0f0f0 6px
+  );
+}
+
+.rates-day.unavailable.saturday {
+  color: #888888;
+}
+
+.rates-calendar-col.is-loading-rates {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.rates-day.has-rate:not(.empty):not(.no-rate):not(.unavailable):hover {
+  background: rgba(75, 185, 235, 0.25);
+}
+
+.rates-day.saturday {
+  font-weight: 700;
+  color: #069797;
+}
+
+.rates-day.in-week {
+  background: rgba(6, 151, 151, 0.18);
+}
+
+.rates-day.selected {
+  background: #069797;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(6, 151, 151, 0.4);
+}
+
+.rates-sidebar {
+  width: 100%;
+  min-width: 0;
+  position: sticky;
+  top: 165px;
+  height: calc(100vh - 165px);
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  padding: 1rem 0;
+  box-sizing: border-box;
+}
+
+.rates-cost-panel {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d8e8ec;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(32, 41, 53, 0.1);
+  padding: clamp(2rem, 3vw, 2.75rem) clamp(1.75rem, 2.5vw, 2.25rem);
+  font-family: 'Lato', sans-serif;
+}
+
+.rates-cost-panel.is-empty .rates-cost-lines,
+.rates-cost-panel.is-empty .rates-cost-total-wrap {
+  opacity: 0.45;
+}
+
+.rates-cost-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: #069797;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.75rem;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.rates-week-dates {
+  text-align: center;
+  font-size: 1.84rem;
+  color: #59677a;
+  margin: 0 0 1.75rem;
+  line-height: 1.45;
+  min-height: 2.4em;
+}
+
+.rates-week-count {
+  display: block;
+  font-size: 1.7rem;
+  color: #069797;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.rates-cost-lines {
+  margin: 0;
+  padding: 0;
+}
+
+.rates-cost-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid #eef2f4;
+  font-size: 1.9rem;
+  color: #616161;
+}
+
+.rates-cost-line dt {
+  font-weight: 400;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.rates-cost-line dd {
+  margin: 0;
+  font-weight: 700;
+  color: #202935;
+  white-space: nowrap;
+}
+
+.rates-cost-detail {
+  display: block;
+  font-size: 1.6rem;
+  color: #59677a;
+  font-weight: 400;
+  margin-top: 0.25rem;
+}
+
+.rates-cost-line--pet label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  font-weight: 400;
+  margin: 0;
+}
+
+.rates-cost-line--pet input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+  accent-color: #069797;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.rates-cost-line--subtotal {
+  border-bottom: none;
+  padding-top: 1rem;
+  font-weight: 700;
+}
+
+.rates-cost-total-wrap {
+  margin-top: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 3px solid #069797;
+}
+
+.rates-cost-line--total {
+  border-bottom: none;
+  padding: 0.35rem 0 0;
+  font-size: 2.3rem;
+}
+
+.rates-cost-line--total dt {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #202935;
+  text-transform: uppercase;
+}
+
+.rates-cost-line--total dd {
+  font-size: 3rem;
+  color: #069797;
+}
+
+.rates-cost-line--deposit,
+.rates-cost-line--remaining {
+  border-bottom: none;
+  padding: 0.5rem 0 0;
+  font-size: 1.9rem;
+}
+
+.rates-cost-line--remaining {
+  padding-bottom: 0.15rem;
+}
+
+.rates-cost-line--deposit dd,
+.rates-cost-line--remaining dd {
+  font-size: 1.9rem;
+  color: #202935;
+}
+
+.rates-cost-note {
+  margin: 1.5rem 0 0;
+  font-size: 1.56rem;
+  color: #59677a;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 1100px) {
+  .rates-layout {
+    grid-template-columns: minmax(0, 1fr) clamp(340px, 38vw, 480px);
+  }
+}
+
+@media (max-width: 900px) {
+  .rates-layout {
+    grid-template-columns: 1fr;
+    padding: 0 0.75rem;
+  }
+
+  .rates-calendar-col {
+    width: 100%;
+  }
+
+  .rates-sidebar {
+    position: static;
+    height: auto;
+    padding: 0;
+    order: -1;
+    width: 100%;
+  }
+
+  .rates-cost-panel {
+    max-width: 640px;
+    margin: 0 auto 1rem;
+  }
+
+  .rates-year-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .rates-year-grid {
+    grid-template-columns: 1fr;
+  }
+}

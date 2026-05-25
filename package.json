@@ -1,0 +1,19 @@
+{
+  "name": "halbach-us",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Halbach vacation rental site with Neon-backed rates and Plumlee availability sync",
+  "scripts": {
+    "sync-availability": "node scripts/sync-availability.js",
+    "import-rates": "node scripts/import-rates.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@sparticuz/chromium": "^131.0.1",
+    "playwright-core": "^1.49.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "playwright": "^1.49.1"
+  }
+}

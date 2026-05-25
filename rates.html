@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weekly Rates &amp; Availability — Sand Castle II Vacation Rental</title>
+<meta name="description" content="View weekly rental rates and availability for Sand Castle II vacation condo. Select a week on the calendar for an instant cost estimate.">
+<meta name="keywords" content="Sand Castle II rates, vacation rental rates, weekly rental Tampa Florida">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i,900,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/icomoon.css" rel="stylesheet" type="text/css">
+<link href="assets/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/animate.css" rel="stylesheet" type="text/css">
+<link href="assets/css/swiper.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/style.css" rel="stylesheet" type="text/css">
+<link href="assets/css/rates.css" rel="stylesheet" type="text/css">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-193065161-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-193065161-1');
+</script>
+</head>
+<body class="loading">
+<script>
+function myFunction() {
+    document.getElementById("demo").innerHTML = "+1 727-777-6034";
+    document.getElementById("demo").style = "block";
+}
+</script>
+
+<header>
+    <div class="topbar">
+        <div class="container">
+            <div class="registration-buttons">
+                <a onClick="myFunction()" href="tel:+1 727-777-6034"><i class="fa fa-phone" style="color:white" aria-hidden="true"></i></a>
+                <span style="display:none" id="demo" class="address hidden-xs"></span>
+                <a id="register-btn" href="mailto:info@vacationtides.com" title="Email"><i style="color:white" class="fa fa-envelope"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="navtop">
+        <div class="container">
+            <a title="Sand Castle II" href="index.html" class="logo-link">
+                <h2 style="display: contents;color: #000;">  Sand Castle II </h2>
+            </a>
+            <nav class="main-menu clearfix">
+                <h1 class="hidden">  Sand Castle II </h1>
+                <ul>
+                    <li class="menu-item"><a title="Home" href="index.html">Home</a></li>
+                    <li class="menu-item"><a title="Indian Rocks" href="about-us.html">Indian Rocks</a></li>
+                    <li class="menu-item"><a title="Sand Castle II" href="property.html">Sand Castle II </a></li>
+                    <li class="menu-item"><a title="Rates" href="rates.html" class="nav-active">Rates</a></li>
+                    <li class="menu-item"><a title="Things To Do" href="attractions.html">Things To Do</a></li>
+                    <li class="menu-item"><a title="Contact Us" href="contact-us.html">Contact Us</a></li>
+                </ul>
+            </nav>
+            <div id="menu-toggle">
+                <div class="bar first"></div>
+                <div class="bar second"></div>
+                <div class="bar third"></div>
+            </div>
+        </div>
+    </div>
+    <nav id="mobile-menu">
+        <h2 class="hidden">Mobile Navigation Menu</h2>
+        <ul>
+            <li class="mobile-menu-item"><a title="Home" class="menu-item" href="index.html">Home</a></li>
+            <li class="mobile-menu-item"><a title="Indian Rocks" class="menu-item" href="about-us.html">Indian Rocks</a></li>
+            <li class="mobile-menu-item"><a title="Sand Castle II" class="menu-item" href="property.html">Sand Castle II</a></li>
+            <li class="mobile-menu-item"><a title="Rates" class="menu-item" href="rates.html">Rates</a></li>
+            <li class="mobile-menu-item"><a title="Things To Do" class="menu-item" href="attractions.html">Things To Do</a></li>
+            <li class="mobile-menu-item"><a title="Contact Us" class="menu-item" href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="clearfix"></div>
+
+<section class="section-breadcrumb">
+    <h2 class="title">Rates</h2>
+    <div class="breadcrumb"><span class="slug"><a href="index.html" class="home"> Home </a> <span class="page"> <i class="fa fa-angle-right" aria-hidden="true"></i> Rates </span></span></div>
+</section>
+
+<main>
+    <section class="rates-page-section">
+        <div class="rates-container">
+            <p class="rates-intro">Click any day to select a rental week. Click an adjacent week to extend, or click a selected week to deselect it. Striped dates are unavailable; grey dates have no rate on file. Fees apply once per reservation; your estimate stays visible on the right.</p>
+
+            <div class="rates-layout">
+                <div>
+                    <div class="rates-calendar-col" id="rates-calendar-col"></div>
+                    <p class="rates-availability-meta">
+                        Last updated: <span id="rates-last-sync">Loading&hellip;</span>
+                        <button type="button" id="rates-sync-btn" class="rates-sync-btn" title="Refresh availability from Plumlee" aria-label="Refresh availability">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </p>
+                </div>
+
+                <aside class="rates-sidebar" aria-label="Weekly cost estimate">
+                    <div class="rates-cost-panel is-empty" id="rates-cost-panel">
+                        <h3 class="rates-cost-title">Weekly Estimate</h3>
+                        <p class="rates-week-dates" id="rates-week-dates">Select a week on the calendar</p>
+
+                        <dl class="rates-cost-lines">
+                            <div class="rates-cost-line">
+                                <dt>Rental Rate <span class="rates-cost-detail">(<span id="weeks-count-label">0 weeks</span>, <span id="nights-count-label">0</span> nights)</span></dt>
+                                <dd id="rates-rental">&mdash;</dd>
+                            </div>
+                            <div class="rates-cost-line">
+                                <dt>Cleaning Fee</dt>
+                                <dd id="rates-cleaning">&mdash;</dd>
+                            </div>
+                            <div class="rates-cost-line">
+                                <dt>Processing Fee</dt>
+                                <dd id="rates-processing">&mdash;</dd>
+                            </div>
+                            <div class="rates-cost-line rates-cost-line--pet">
+                                <dt>
+                                    <label for="rates-pet-checkbox">
+                                        <input type="checkbox" id="rates-pet-checkbox" disabled>
+                                        Pet Fee
+                                    </label>
+                                </dt>
+                                <dd id="rates-pet">$0.00</dd>
+                            </div>
+                            <div class="rates-cost-line rates-cost-line--subtotal">
+                                <dt>Subtotal</dt>
+                                <dd id="rates-subtotal">&mdash;</dd>
+                            </div>
+                            <div class="rates-cost-line">
+                                <dt>Tax (<span id="tax-rate-label">13</span>%)</dt>
+                                <dd id="rates-tax">&mdash;</dd>
+                            </div>
+                        </dl>
+
+                        <div class="rates-cost-total-wrap">
+                            <dl class="rates-cost-lines">
+                                <div class="rates-cost-line rates-cost-line--total">
+                                    <dt>Total</dt>
+                                    <dd id="rates-total">&mdash;</dd>
+                                </div>
+                                <div class="rates-cost-line rates-cost-line--deposit">
+                                    <dt>Deposit (<span id="deposit-rate-label">25</span>%)</dt>
+                                    <dd id="rates-deposit">&mdash;</dd>
+                                </div>
+                                <div class="rates-cost-line rates-cost-line--remaining">
+                                    <dt>Remaining Total</dt>
+                                    <dd id="rates-remaining">&mdash;</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <p class="rates-cost-note">Estimate includes all fees and taxes. Contact us to confirm availability and book your stay.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="rates-sync-modal-backdrop" class="rates-sync-modal-backdrop" aria-hidden="true">
+    <div id="rates-sync-modal" class="rates-sync-modal" role="dialog" aria-labelledby="rates-sync-modal-title" aria-modal="true">
+        <h4 id="rates-sync-modal-title">Refresh availability</h4>
+        <p>This pulls the latest booked dates from Plumlee. It may take up to a minute. Please keep this page open.</p>
+        <div class="rates-sync-modal-actions">
+            <button type="button" id="rates-sync-modal-cancel" class="rates-sync-modal-cancel">Cancel</button>
+            <button type="button" id="rates-sync-modal-ok" class="rates-sync-modal-ok">OK</button>
+        </div>
+        <p class="rates-sync-modal-spinner">Syncing availability&hellip;</p>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-columns" style="max-width: 900px; margin: 0 auto;">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="subtitle"><strong>Useful Links</strong></h3>
+                    <ul class="site-links">
+                        <li><a title="Home" href="index.html">Home</a></li>
+                        <li><a title="Indian Rocks" href="about-us.html">Indian Rocks</a></li>
+                        <li><a title="Rates" href="rates.html">Rates</a></li>
+                        <li><a title="Sand Castle II" href="property.html">Sand Castle II</a></li>
+                        <li><a title="Contact Us" href="contact-us.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <h3 class="subtitle"><strong>Contact Us</strong></h3>
+                    <ul class="site-links">
+                        <li><a href="tel:+1 727-777-6034" title="Phone Number"><i style="color:white" class="fa fa-phone"></i> Phone Number : +1 727-777-6034</a></li>
+                        <li><a href="tel:888-973-9711" title="Phone Number"><i style="color:white" class="fa fa-phone"></i> Toll Free : +1 888-973-9711</a></li>
+                        <li><a title="Email" href="mailto: info@vacationtides.com"><i style="color:white" class="fa fa-envelope"></i> Email : info@vacationtides.com</a></li>
+                        <li><a title="Address" href="javascript:void(0);"><i style="color:white" class="fa fa-user"></i> Owner : Linda or Richard Halbach </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<p id="back-top"><a href="#top"></a></p>
+
+<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/plugins.js"></script>
+<script type="text/javascript" src="assets/js/functions.js"></script>
+<script type="text/javascript" src="assets/js/wow.min.js"></script>
+<script type="text/javascript" src="assets/js/rates-config.js"></script>
+<script type="text/javascript" src="assets/js/rates.js"></script>
+<script type="text/javascript">
+$(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if (scroll >= 50) {
+        $(".navtop").addClass("stickadd");
+    } else {
+        $(".navtop").removeClass("stickadd");
+    }
+});
+$('#back-top a').click(function(){
+    $("html, body").animate({ scrollTop: 0 }, 600);
+    return false;
+});
+</script>
+</body>
+</html>

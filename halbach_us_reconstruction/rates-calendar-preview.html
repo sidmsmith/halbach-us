@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rates Calendar — Design Samples (2027)</title>
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+<style>
+  :root {
+    --navy: #202935;
+    --cyan: #03a9f4;
+    --teal: #069797;
+    --sky: #4bb9eb;
+    --gold: #fbca37;
+    --text: #616161;
+    --muted: #59677a;
+    --bg: #f3f3f3;
+    --white: #fff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .preview-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .preview-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .preview-header p {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    opacity: 0.85;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .preview-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .preview-nav button {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.55rem 1.1rem;
+    border: 2px solid var(--navy);
+    background: var(--white);
+    color: var(--navy);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .preview-nav button:hover,
+  .preview-nav button.active {
+    background: var(--navy);
+    color: var(--cyan);
+  }
+
+  .sample-panel {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .sample-panel.active { display: block; }
+
+  .sample-label {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .sample-label h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cyan);
+    font-size: 1.75rem;
+    margin: 0 0 0.35rem;
+    text-transform: uppercase;
+  }
+
+  .sample-label p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .legend-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .year-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .year-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Sample A: Classic Coastal ── */
+  .sample-a .month-card {
+    background: var(--white);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(32, 41, 53, 0.12);
+    overflow: hidden;
+  }
+
+  .sample-a .month-header {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 0.45rem;
+  }
+
+  .sample-a .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #eef2f6;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    padding: 0.25rem 0;
+  }
+
+  .sample-a .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0.2rem;
+    gap: 2px;
+  }
+
+  .sample-a .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.15s;
+  }
+
+  .sample-a .day.empty { cursor: default; }
+  .sample-a .day:not(.empty):hover { background: rgba(3, 169, 244, 0.15); }
+  .sample-a .day.saturday { font-weight: 700; color: var(--navy); }
+  .sample-a .day.in-week { background: rgba(3, 169, 244, 0.22); }
+  .sample-a .day.selected { background: var(--cyan); color: var(--white); font-weight: 700; }
+  .sample-a .day.in-week.selected { background: var(--cyan); }
+
+  /* ── Sample B: Teal & Sky ── */
+  .sample-b .month-card {
+    background: var(--white);
+    border: 1px solid #d8e8ec;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .sample-b .month-header {
+    background: linear-gradient(135deg, var(--teal), var(--sky));
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.45rem;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+  }
+
+  .sample-b .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: rgba(6, 151, 151, 0.08);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--teal);
+    text-align: center;
+    padding: 0.25rem 0;
+  }
+
+  .sample-b .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0.25rem;
+    gap: 1px;
+  }
+
+  .sample-b .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+
+  .sample-b .day.empty { cursor: default; }
+  .sample-b .day:not(.empty):hover { background: rgba(75, 185, 235, 0.25); }
+  .sample-b .day.saturday { font-weight: 700; color: var(--teal); }
+  .sample-b .day.in-week { background: rgba(6, 151, 151, 0.18); }
+  .sample-b .day.in-week:first-of-type,
+  .sample-b .day.week-start { border-radius: 50% 0 0 50%; }
+  .sample-b .day.selected {
+    background: var(--teal);
+    color: var(--white);
+    font-weight: 700;
+    box-shadow: 0 2px 4px rgba(6, 151, 151, 0.4);
+  }
+
+  /* ── Sample C: Navy & Gold (Premium) ── */
+  .sample-c .month-card {
+    background: var(--white);
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(32, 41, 53, 0.18);
+    overflow: hidden;
+  }
+
+  .sample-c .month-header {
+    background: var(--navy);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 0.45rem;
+  }
+
+  .sample-c .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--navy);
+    font-family: 'Lato', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    padding: 0.3rem 0;
+  }
+
+  .sample-c .weekdays span:first-child { color: var(--gold); }
+
+  .sample-c .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0.3rem;
+    gap: 3px;
+  }
+
+  .sample-c .day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text);
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  .sample-c .day.empty { cursor: default; }
+  .sample-c .day:not(.empty):hover { border-color: var(--cyan); color: var(--navy); }
+  .sample-c .day.saturday { font-weight: 700; color: var(--navy); }
+  .sample-c .day.in-week {
+    background: var(--navy);
+    color: rgba(255,255,255,0.85);
+    border-color: var(--navy);
+  }
+  .sample-c .day.in-week.saturday { color: var(--gold); }
+  .sample-c .day.selected {
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px var(--navy);
+  }
+
+  .selection-info {
+    margin-top: 1.75rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    color: var(--navy);
+    background: var(--white);
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+
+  .selection-info strong { color: var(--cyan); }
+  .sample-c + .selection-info strong,
+  .sample-c .selection-info strong { color: var(--teal); }
+
+  #info-c strong { color: var(--gold); background: var(--navy); padding: 0.1rem 0.4rem; border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <h1>Rates Calendar — Design Samples</h1>
+  <p>2027 yearly calendar in a 3×4 month grid. Click any day to highlight the rental week (Saturday check-in through the following Friday). These previews use the Sand Castle II / Halbach site palette.</p>
+</div>
+
+<div class="preview-nav">
+  <button type="button" class="active" data-sample="a">Sample A — Classic Coastal</button>
+  <button type="button" data-sample="b">Sample B — Teal &amp; Sky</button>
+  <button type="button" data-sample="c">Sample C — Navy &amp; Gold</button>
+</div>
+
+<!-- Sample A -->
+<div id="panel-a" class="sample-panel sample-a active">
+  <div class="sample-label">
+    <h2>Sample A — Classic Coastal</h2>
+    <p>Navy month headers, white cards, cyan week highlight — closest match to existing nav hover &amp; title styling</p>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background:#202935"></span> Navy header (#202935)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:rgba(3,169,244,0.22)"></span> Week highlight</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#03a9f4"></span> Selected day (#03a9f4)</div>
+  </div>
+  <div class="year-grid" id="grid-a"></div>
+  <div class="selection-info" id="info-a">Click a day to preview the Saturday–Saturday rental week.</div>
+</div>
+
+<!-- Sample B -->
+<div id="panel-b" class="sample-panel sample-b">
+  <div class="sample-label">
+    <h2>Sample B — Teal &amp; Sky</h2>
+    <p>Gradient headers using the site's teal/sky accent bars — softer, beach-resort feel with rounded day cells</p>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background:linear-gradient(135deg,#069797,#4bb9eb)"></span> Teal → Sky gradient</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:rgba(6,151,151,0.18)"></span> Week highlight</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#069797"></span> Selected day (#069797)</div>
+  </div>
+  <div class="year-grid" id="grid-b"></div>
+  <div class="selection-info" id="info-b">Click a day to preview the Saturday–Saturday rental week.</div>
+</div>
+
+<!-- Sample C -->
+<div id="panel-c" class="sample-panel sample-c">
+  <div class="sample-label">
+    <h2>Sample C — Navy &amp; Gold</h2>
+    <p>Bold inverted week band (navy fill) with gold selected day — echoes the homepage slider gold accent (#fbca37)</p>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background:#202935"></span> Navy week band</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#fbca37"></span> Gold selected day (#fbca37)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:#03a9f4"></span> Hover accent (#03a9f4)</div>
+  </div>
+  <div class="year-grid" id="grid-c"></div>
+  <div class="selection-info" id="info-c">Click a day to preview the Saturday–Saturday rental week.</div>
+</div>
+
+<script>
+(function () {
+  const YEAR = 2027;
+  const MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  const WEEKDAYS = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
+
+  function getWeekRange(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const daysSinceSat = (day + 1) % 7;
+    const start = new Date(d);
+    start.setDate(d.getDate() - daysSinceSat);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    return { start, end };
+  }
+
+  function formatDate(d) {
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function buildMonth(year, monthIndex) {
+    const first = new Date(year, monthIndex, 1);
+    const last = new Date(year, monthIndex + 1, 0);
+    const startPad = (first.getDay() + 1) % 7;
+
+    const card = document.createElement('div');
+    card.className = 'month-card';
+    card.dataset.month = monthIndex;
+
+    const header = document.createElement('div');
+    header.className = 'month-header';
+    header.textContent = MONTHS[monthIndex];
+    card.appendChild(header);
+
+    const weekdays = document.createElement('div');
+    weekdays.className = 'weekdays';
+    WEEKDAYS.forEach(function (w) {
+      const s = document.createElement('span');
+      s.textContent = w;
+      weekdays.appendChild(s);
+    });
+    card.appendChild(weekdays);
+
+    const days = document.createElement('div');
+    days.className = 'days';
+
+    for (let i = 0; i < startPad; i++) {
+      const empty = document.createElement('span');
+      empty.className = 'day empty';
+      days.appendChild(empty);
+    }
+
+    for (let day = 1; day <= last.getDate(); day++) {
+      const cell = document.createElement('span');
+      cell.className = 'day';
+      cell.textContent = day;
+      const date = new Date(year, monthIndex, day);
+      cell.dataset.date = date.toISOString().slice(0, 10);
+      if (date.getDay() === 6) cell.classList.add('saturday');
+      days.appendChild(cell);
+    }
+
+    card.appendChild(days);
+    return card;
+  }
+
+  function buildYearGrid(containerId) {
+    const grid = document.getElementById(containerId);
+    for (let m = 0; m < 12; m++) {
+      grid.appendChild(buildMonth(YEAR, m));
+    }
+  }
+
+  ['grid-a', 'grid-b', 'grid-c'].forEach(buildYearGrid);
+
+  function clearSelection(panel) {
+    panel.querySelectorAll('.day.in-week, .day.selected, .day.week-start').forEach(function (el) {
+      el.classList.remove('in-week', 'selected', 'week-start');
+    });
+  }
+
+  function selectDay(panel, dateStr, infoId) {
+    clearSelection(panel);
+    const clicked = new Date(dateStr + 'T12:00:00');
+    const range = getWeekRange(clicked);
+    const info = document.getElementById(infoId);
+
+    panel.querySelectorAll('.day[data-date]').forEach(function (cell) {
+      const d = new Date(cell.dataset.date + 'T12:00:00');
+      if (d >= range.start && d <= range.end) {
+        cell.classList.add('in-week');
+        if (d.getTime() === range.start.getTime()) cell.classList.add('week-start');
+      }
+      if (cell.dataset.date === dateStr) cell.classList.add('selected');
+    });
+
+    info.innerHTML = 'Selected week: <strong>' + formatDate(range.start) + '</strong> → <strong>' + formatDate(range.end) + '</strong> (7 nights, Sat check-in)';
+  }
+
+  document.querySelectorAll('.sample-panel').forEach(function (panel) {
+    const infoId = 'info-' + panel.id.replace('panel-', '');
+    panel.addEventListener('click', function (e) {
+      const day = e.target.closest('.day[data-date]');
+      if (day) selectDay(panel, day.dataset.date, infoId);
+    });
+  });
+
+  document.querySelectorAll('.preview-nav button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.preview-nav button').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.sample-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.sample).classList.add('active');
+    });
+  });
+
+  selectDay(document.getElementById('panel-a'), '2027-06-12', 'info-a');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "halbach-rates-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Neon-backed rates API for Halbach vacation rental site",
+  "scripts": {
+    "start": "node server.js",
+    "import": "node scripts/import-rates.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@sparticuz/chromium": "^148.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "playwright": "^1.60.0",
+    "playwright-core": "^1.60.0"
+  }
+}
