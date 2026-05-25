@@ -684,6 +684,8 @@
       syncBtn.disabled = true;
     }
 
+    var syncStartedAt = lastSyncAt;
+
     fetch(getAvailabilitySyncUrl(), { method: 'POST' })
       .then(function (res) {
         return res.json().then(function (body) {
@@ -693,7 +695,10 @@
           return body;
         });
       })
-      .then(function () {
+      .then(function (body) {
+        if (body.triggered) {
+          return pollForSyncCompletion(syncStartedAt);
+        }
         closeSyncModal();
         window.location.reload();
       })
@@ -707,6 +712,48 @@
           syncBtn.disabled = false;
         }
       });
+  }
+
+  function pollForSyncCompletion(previousSyncAt) {
+    var attempts = 0;
+    var maxAttempts = 30;
+
+    return new Promise(function (resolve, reject) {
+      function poll() {
+        attempts += 1;
+        fetch(buildRangeApiUrl(getAvailabilityApiUrl()))
+          .then(function (res) {
+            if (!res.ok) {
+              throw new Error('HTTP ' + res.status);
+            }
+            return res.json();
+          })
+          .then(function (data) {
+            var updated =
+              data.lastSyncAt &&
+              data.lastSyncAt !== previousSyncAt &&
+              data.lastSyncAt !== syncStartedAt;
+            if (updated) {
+              resolve(data);
+              return;
+            }
+            if (attempts >= maxAttempts) {
+              reject(
+                new Error(
+                  'Sync is still running. Refresh this page in a minute to see updated availability.'
+                )
+              );
+              return;
+            }
+            setTimeout(poll, 3000);
+          })
+          .catch(reject);
+      }
+      poll();
+    }).then(function () {
+      closeSyncModal();
+      window.location.reload();
+    });
   }
 
   function selectDay(dateStr) {

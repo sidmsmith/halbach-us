@@ -3,18 +3,6 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
-  "crons": [
-    {
-      "path": "/api/availability/sync",
-      "schedule": "0 * * * *"
-    }
-  ],
-  "functions": {
-    "api/availability/sync.js": {
-      "maxDuration": 60,
-      "memory": 1024
-    }
-  },
   "headers": [
     {
       "source": "/assets/(.*)",

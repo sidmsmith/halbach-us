@@ -8,9 +8,7 @@
     "import-rates": "node scripts/import-rates.js"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
-    "@sparticuz/chromium-min": "^131.0.1",
-    "puppeteer-core": "^24.23.1"
+    "@neondatabase/serverless": "^0.10.4"
   },
   "devDependencies": {
     "dotenv": "^16.4.7",

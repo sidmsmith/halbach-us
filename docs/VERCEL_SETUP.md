@@ -2,59 +2,41 @@
 
 Deploy this repo root to [Vercel](https://vercel.com). The site is live at [https://halbach-us.vercel.app/](https://halbach-us.vercel.app/).
 
-## Required environment variable
+## Environment variables
+
+### Vercel (Settings → Environment Variables)
 
 | Variable | Required | Notes |
 |----------|----------|--------|
-| `NEON_DATABASE_URL` | Yes | Neon Postgres connection string (same project as `halbach_rates`) |
-| `PLUMLEE_UNIT_URL` | No | Defaults to Sand Castle II Plumlee listing |
-| `AWS_LAMBDA_JS_RUNTIME` | For sync | Value: `nodejs22.x` — required for refresh/cron Chromium on Vercel |
+| `NEON_DATABASE_URL` | Yes | Neon Postgres connection string |
+| `GITHUB_SYNC_TOKEN` | Yes for refresh button | GitHub PAT with **Actions: Read and write** on this repo |
 
-Apply to **Production**, **Preview**, and **Development**, then **Redeploy**.
+Optional: `GITHUB_REPO` (default `sidmsmith/halbach-us`), `PLUMLEE_UNIT_URL`
 
-`DATABASE_URL` is still accepted locally as a fallback, but Vercel should use `NEON_DATABASE_URL`.
+### GitHub (repo → Settings → Secrets and variables → Actions)
 
-Hourly cron and manual refresh need no `CRON_SECRET`.
+| Secret | Required | Notes |
+|--------|----------|--------|
+| `NEON_DATABASE_URL` | Yes | Same Neon connection string as Vercel |
 
-## Fix: calendar stuck on "Loading" or no grey/stripe dates
+After changing env vars, **Redeploy** on Vercel.
 
-Both `/api/rates` and `/api/availability` need **`NEON_DATABASE_URL`** on Vercel.
+## How availability sync works
 
-1. [Neon console](https://console.neon.tech) → your project → **Connect** → copy the connection string (pooler URL recommended).
-2. [Vercel dashboard](https://vercel.com) → **halbach-us** → **Settings** → **Environment Variables**
-3. Add `NEON_DATABASE_URL` = `postgresql://...` for **Production**, **Preview**, and **Development**
-4. **Deployments** → latest deployment → **⋯** → **Redeploy**
+Plumlee scraping uses **Playwright**, which does not run reliably on Vercel serverless.
 
-Verify: `https://halbach-us.vercel.app/api/rates?from=2026-06-01&to=2026-06-07` should return JSON with `"rates": { ... }`.
+| Trigger | Where it runs |
+|---------|----------------|
+| **Hourly** | [GitHub Actions](https://github.com/sidmsmith/halbach-us/actions/workflows/sync-plumlee-availability.yml) (`cron: 0 * * * *`) |
+| **Refresh icon** on rates page | Vercel API starts the same GitHub workflow, then polls Neon until `lastSyncAt` updates |
+| **Local** | `npm run sync-availability` (Playwright on your machine) |
 
-## Database setup
+### Create `GITHUB_SYNC_TOKEN`
 
-Run in Neon SQL editor (or use files in `database/`):
-
-1. `001_halbach_rates.sql` — nightly rates (if not already created)
-2. `002_halbach_availability.sql` — blocked dates + sync history
-
-Import rates CSV (local):
-
-```bash
-npm install
-cp .env.example .env   # set NEON_DATABASE_URL
-npm run import-rates
-```
-
-Initial availability sync (local):
-
-```bash
-npm run sync-availability
-```
-
-## Hourly cron
-
-`vercel.json` runs `GET /api/availability/sync` every hour (`0 * * * *` UTC). No auth secret required.
-
-After deploying, open Vercel → Project → **Cron Jobs** to confirm the job is registered.
-
-**Note:** Sync uses headless Chromium (~15–60s). The sync function is configured for **60s max duration**. On Vercel Hobby, serverless limits may be tighter; if cron fails with timeout, upgrade to Pro or run sync manually via the refresh icon on the rates page.
+1. GitHub → **Settings** → **Developer settings** → **Personal access tokens** → **Fine-grained tokens**
+2. Repository access: **sidmsmith/halbach-us**
+3. Permissions: **Actions: Read and write**
+4. Copy token → Vercel → `GITHUB_SYNC_TOKEN`
 
 ## Pages & APIs
 
@@ -63,12 +45,12 @@ After deploying, open Vercel → Project → **Cron Jobs** to confirm the job is
 | `/rates.html` | Rates calendar + pricing |
 | `GET /api/rates?from=&to=` | Nightly rates from Neon |
 | `GET /api/availability?from=&to=` | Blocked dates + last sync time |
-| `GET/POST /api/availability/sync` | Plumlee scrape → Neon (cron + manual refresh) |
+| `POST /api/availability/sync` | On Vercel: starts GitHub workflow. Locally: runs Playwright sync |
 
 ## Manual refresh on rates page
 
-Under the calendar: **Last updated: …** with a refresh icon. Click → confirm modal → sync runs → page reloads when complete.
+Under the calendar: **Last updated: …** with a refresh icon. Click → OK → GitHub Actions runs → page reloads when Neon shows a new timestamp.
 
 ## Redeploy
 
-Push to `main` on GitHub (`sidmsmith/halbach-us`); Vercel redeploys automatically if connected.
+Push to `main` on GitHub; Vercel redeploys automatically if connected.
