@@ -2,26 +2,29 @@
 
 Deploy this repo root to [Vercel](https://vercel.com). The site is live at [https://halbach-us.vercel.app/](https://halbach-us.vercel.app/).
 
-## Fix: calendar stuck on "Loading" or no grey/stripe dates
-
-Both `/api/rates` and `/api/availability` need **`DATABASE_URL`** on Vercel. Without it they return HTTP 500 and the calendar cannot load data.
-
-1. [Neon console](https://console.neon.tech) → your project → **Connect** → copy the connection string (pooler URL recommended).
-2. [Vercel dashboard](https://vercel.com) → **halbach-us** → **Settings** → **Environment Variables**
-3. Add `DATABASE_URL` = `postgresql://...` for **Production**, **Preview**, and **Development**
-4. **Deployments** → latest deployment → **⋯** → **Redeploy** (required after adding env vars)
-
-Verify: open `https://halbach-us.vercel.app/api/rates?from=2026-06-01&to=2026-06-07` — you should see JSON with `"rates": { ... }`, not `{"error":"Failed to load rates"}`.
-
-## Environment variables (Vercel → Settings → Environment Variables)
+## Required environment variable
 
 | Variable | Required | Notes |
 |----------|----------|--------|
-| `DATABASE_URL` | Yes | Neon Postgres connection string (same project as `halbach_rates`) |
-| `CRON_SECRET` | Recommended | Random string; Vercel Cron sends `Authorization: Bearer <value>` |
+| `NEON_DATABASE_URL` | Yes | Neon Postgres connection string (same project as `halbach_rates`) |
 | `PLUMLEE_UNIT_URL` | No | Defaults to Sand Castle II Plumlee listing |
 
-Apply to **Production**, **Preview**, and **Development**.
+Apply to **Production**, **Preview**, and **Development**, then **Redeploy**.
+
+`DATABASE_URL` is still accepted locally as a fallback, but Vercel should use `NEON_DATABASE_URL`.
+
+No other env vars are required. Hourly cron runs without `CRON_SECRET`.
+
+## Fix: calendar stuck on "Loading" or no grey/stripe dates
+
+Both `/api/rates` and `/api/availability` need **`NEON_DATABASE_URL`** on Vercel.
+
+1. [Neon console](https://console.neon.tech) → your project → **Connect** → copy the connection string (pooler URL recommended).
+2. [Vercel dashboard](https://vercel.com) → **halbach-us** → **Settings** → **Environment Variables**
+3. Add `NEON_DATABASE_URL` = `postgresql://...` for **Production**, **Preview**, and **Development**
+4. **Deployments** → latest deployment → **⋯** → **Redeploy**
+
+Verify: `https://halbach-us.vercel.app/api/rates?from=2026-06-01&to=2026-06-07` should return JSON with `"rates": { ... }`.
 
 ## Database setup
 
@@ -34,7 +37,7 @@ Import rates CSV (local):
 
 ```bash
 npm install
-cp .env.example .env   # set DATABASE_URL
+cp .env.example .env   # set NEON_DATABASE_URL
 npm run import-rates
 ```
 
@@ -46,7 +49,7 @@ npm run sync-availability
 
 ## Hourly cron
 
-`vercel.json` runs `GET /api/availability/sync` every hour (`0 * * * *` UTC).
+`vercel.json` runs `GET /api/availability/sync` every hour (`0 * * * *` UTC). No auth secret required.
 
 After deploying, open Vercel → Project → **Cron Jobs** to confirm the job is registered.
 

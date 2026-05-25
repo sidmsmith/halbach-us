@@ -519,7 +519,7 @@
     if (ratesLoadError && availabilityLoadError) {
       panelEl.classList.add('is-empty');
       weekDatesEl.textContent =
-        'Unable to load calendar data. Set DATABASE_URL in Vercel and redeploy.';
+        'Unable to load calendar data. Set NEON_DATABASE_URL in Vercel and redeploy.';
       setText('weeks-count-label', '0 weeks');
       setText('nights-count-label', '0');
       setText('rates-rental', '\u2014');

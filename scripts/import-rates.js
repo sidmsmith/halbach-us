@@ -48,8 +48,9 @@ async function upsertBatch(sql, batch) {
 
 async function main() {
   const csvPath = process.argv[2] || DEFAULT_CSV;
-  if (!process.env.DATABASE_URL) {
-    console.error('Set DATABASE_URL in .env (see .env.example)');
+  const databaseUrl = process.env.NEON_DATABASE_URL || process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    console.error('Set NEON_DATABASE_URL in .env (see .env.example)');
     process.exit(1);
   }
   if (!fs.existsSync(csvPath)) {
@@ -58,7 +59,7 @@ async function main() {
   }
 
   const rows = parseCsv(fs.readFileSync(csvPath, 'utf8'));
-  const sql = neon(process.env.DATABASE_URL);
+  const sql = neon(databaseUrl);
 
   console.log('Importing', rows.length, 'rows from', csvPath);
 
