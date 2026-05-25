@@ -699,7 +699,7 @@
       })
       .catch(function (err) {
         console.error('Manual sync failed:', err);
-        alert('Availability sync failed. Please try again in a moment.');
+        alert(err.message || 'Availability sync failed. Please try again in a moment.');
         if (syncModal) {
           syncModal.classList.remove('is-busy');
         }
