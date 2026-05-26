@@ -4459,6 +4459,30 @@ a.carousel-control.right
 }
 }
 
+/* Homepage hero video — hide YTPlayer play/pause UI */
+#myPlayer .inlinePlayButton,
+#customElement .inlinePlayButton,
+.mbYTP_wrapper .inlinePlayButton {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+#myPlayer .mb_YTPBar,
+#wrapper .mb_YTPBar {
+  display: none !important;
+}
+
+#myPlayer .YTPOverlay {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+#customElement.player {
+  display: none !important;
+}
+
 /* Animated arrows circle positioning */
 .sidbtn {
   position: absolute !important;
