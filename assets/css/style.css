@@ -4459,28 +4459,35 @@ a.carousel-control.right
 }
 }
 
-/* Homepage hero video — hide YTPlayer play/pause UI */
-#myPlayer .inlinePlayButton,
-#customElement .inlinePlayButton,
-.mbYTP_wrapper .inlinePlayButton {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  opacity: 0 !important;
+/* Homepage hero — background YouTube embed (no play/pause overlay) */
+#myPlayer.hero-video {
+  background: #000;
+  height: 90vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
-#myPlayer .mb_YTPBar,
-#wrapper .mb_YTPBar {
-  display: none !important;
+.hero-video__iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100%;
+  min-width: 177.78vh;
+  border: 0;
+  transform: translate(-50%, -50%) scale(1.12);
+  transform-origin: center center;
+  pointer-events: none;
 }
 
-#myPlayer .YTPOverlay {
-  pointer-events: none !important;
-  cursor: default !important;
+#main-slider.vidcontent {
+  pointer-events: none;
 }
 
-#customElement.player {
-  display: none !important;
+#main-slider.vidcontent a {
+  pointer-events: auto;
 }
 
 /* Animated arrows circle positioning */
