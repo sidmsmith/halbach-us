@@ -2,6 +2,26 @@
 
 Deploy this repo root to [Vercel](https://vercel.com). The site is live at [https://halbach-us.vercel.app/](https://halbach-us.vercel.app/).
 
+## Custom domain (`www.halbach.us`)
+
+**Important:** Pushes to GitHub only update **Vercel**. If you still browse [https://www.halbach.us/](https://www.halbach.us/) and see an old homepage (for example a center **pause/play** circle on the hero video), that URL may still point at the **legacy Apache host**, not this project.
+
+Quick check:
+
+| URL | Expected hero |
+|-----|----------------|
+| [halbach-us.vercel.app](https://halbach-us.vercel.app/) | New site (no YTPlayer, no YouTube embed UI) |
+| [www.halbach.us](https://www.halbach.us/) | Legacy until DNS is moved |
+
+To serve the rebuilt site on your domain:
+
+1. Vercel → your **halbach-us** project → **Settings** → **Domains**.
+2. Add `halbach.us` and `www.halbach.us`.
+3. At your DNS registrar, set the records Vercel shows (typically `www` → CNAME to `cname.vercel-dns.com`, apex → A records to Vercel’s IPs or their recommended ALIAS).
+4. Wait for DNS propagation, then open `www.halbach.us` in a private window and confirm the page source does **not** include `jquery.mb.YTPlayer`.
+
+Until DNS points at Vercel, update the legacy Apache files separately if you need the fix there immediately.
+
 ## Environment variables
 
 ### Vercel (Settings → Environment Variables)

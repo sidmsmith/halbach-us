@@ -4459,27 +4459,47 @@ a.carousel-control.right
 }
 }
 
-/* Homepage hero — background YouTube embed (no play/pause overlay) */
+/* Homepage hero — still image + subtle motion (no YouTube / YTPlayer UI) */
 #myPlayer.hero-video {
-  background: #000;
+  background: #0a3d62;
   height: 90vh;
   width: 100%;
   position: relative;
   overflow: hidden;
 }
 
-.hero-video__iframe {
+.hero-video__media {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100vw;
-  height: 56.25vw;
-  min-height: 100%;
-  min-width: 177.78vh;
-  border: 0;
-  transform: translate(-50%, -50%) scale(1.12);
-  transform-origin: center center;
-  pointer-events: none;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-video__media-inner {
+  position: absolute;
+  inset: -6%;
+  background-color: #0a3d62;
+  background-image: url('https://i.ytimg.com/vi/XVYRsGm1J5Q/maxresdefault.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: hero-video-pan 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes hero-video-pan {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video__media-inner {
+    animation: none;
+    inset: 0;
+  }
 }
 
 #main-slider.vidcontent {
