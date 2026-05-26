@@ -3767,6 +3767,48 @@ background: rgba(226,245,252,1);
     top: 0;
 }*/
 .navtop{position:relative;}
+.navtop > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  height: 99px;
+}
+.navtop > .container::before,
+.navtop > .container::after {
+  display: none;
+}
+header .logo-link {
+  float: none;
+  flex: 0 0 auto;
+  margin-right: auto;
+}
+header .main-menu {
+  float: none;
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-left: 0;
+}
+header #menu-toggle {
+  float: none;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+@media only screen and (min-width: 993px) {
+  header #menu-toggle {
+    margin-left: 0;
+  }
+}
+/* Property page: full-width centered content without Book Now sidebar */
+.property-page-main {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  float: none;
+}
+.blog-details-area .property-page-title {
+  text-align: center;
+}
 .b-now {
     width: auto;
     position: fixed;

@@ -731,13 +731,6 @@ function myFunction() {
     text-align: center;
 }
 
-@media only screen and (min-width: 568px)
-{
-    #mob-book
-    {
-        display: none;
-    }
-}
 
 
 
@@ -914,13 +907,11 @@ function myFunction() {
 </style>
   
  
-<button id="mob-book" class="btn btn-block btn-primary text-center"> BOOK NOW </button>
-
 <section class="blog-details-area ptb-90">
     <div class="container" >
         <div class="row">
-            <div class="col-md-12 property"><h2 style="margin: 0px 0px 20px;     font-size: 32px;   text-shadow: 1px 1px 1px #e0dddd;">Sand Castle II 2306</h2></div>
-            <div class="col-md-9 scrollwrap">
+            <div class="col-md-12 property property-page-title"><h2 style="margin: 0px 0px 20px;     font-size: 32px;   text-shadow: 1px 1px 1px #e0dddd;">Sand Castle II 2306</h2></div>
+            <div class="col-md-12 scrollwrap property-page-main">
                         <div  class="page wrapper main-wrapper">  
        
 <div class="row clearfix"> 
@@ -1062,32 +1053,6 @@ function myFunction() {
                
         </div>
  
-        <script>
-            $(document).ready(function() {
-                var s = $(".sticksection");
-                var wiw = $(window).width();
-                var getH = $('.scrollwrap').height();
-                // alert(getH);
-                var pos = s.position();
-                $(window).scroll(function() {
-                    var windowpos = $(window).scrollTop();
-                    //if (windowpos >= pos.top & windowpos >= 1) {
-                    if (windowpos > 850 & windowpos < getH + 100 ) {
-                        s.addClass("stickyFrom");
-                        $('.stickybox').css('height', getH + 'px');
-                    } else {
-                        s.removeClass("stickyFrom");
-                        $('.stickybox').css('height', 'auto');
-                    };
-                    if(wiw <= 1023){
-                    $('.stickybox').css('height', 'auto');
-                    s.removeClass("stickyFrom");
-                    //alert('Below form 600');
-                };
-                });
-                
-            });
-        </script>
                 <asht class="scrollnav hidden-xs" style="display:block;">
                     <ul>
                         <li><a href="#Overview">Overview</a></li>
@@ -1886,78 +1851,12 @@ Our condominium includes an in-unit laundry, appliances, and other amenities to 
                     <div style="display:none;"> </div>
                 </div>
             </div>
-            <div class="col-md-3 stickybox" id="quotebx">
-                <div class="sticksection" style="width:295px;    box-shadow: 1px 1px 1px #c3c3c3;">
-                    <div class="querybox">
-                        <h4 style="margin-top:0px">Book Now</h4>
-                        <form action="#" method="post" id="submitForm">
-                              
-                            <div class="">
-                                <label>Check In*</label>
-                                <input class="form-control" readonly name="first" required="" id="txtFrom" Placeholder="Enter Check In Date" type="text">
-                            </div>
-                            <div class="">
-                                <label>Check Out*</label>
-                                <input class="form-control" readonly name="last" id="txtTo" required="" Placeholder="Enter Check Out" type="text">
-                                
-                            </div>
-                                                        <div class="">
-                                <label>Select Guest*</label>
-								<!--<div class="arrow"></div>-->
-                                <select class="form-control"  id="guest" name="guest">
-                                                                <option value="1">1 Guest(s)</option>
-                                                                <option value="2">2 Guest(s)</option>
-                                                                <option value="3">3 Guest(s)</option>
-                                                                <option value="4">4 Guest(s)</option>
-                                                                <option value="5">5 Guest(s)</option>
-                                                                <option value="6">6 Guest(s)</option>
-                                                                <option value="7">7 Guest(s)</option>
-                                                                <option value="8">8 Guest(s)</option>
-                                                                </select>
-                                
-                            </div>
-
-
-                            <div class="">
-                                <label>Select Pets</label>
-                                <!--<div class="arrow"></div>-->
-                                <select class="form-control" id="guest" name="pet" style="display: none;">
-                                <option value="0">0 Pets(s)</option>
-                                <option value="1">1 Pets(s)</option>
-                               
-                                </select>
-                            </div>
-                            
-                          														
-                            <div style="text-align: center;">
-                                <input type="button" class="form-control btn btn-info home-form" name="book-sub" value="Get Quote" style="margin:10px 0px; color:white">
-                                <input name="pro_id" value="2" type="hidden">
-                                
-                            </div>
-                            
-                        </form>
-						 <div style="text-align: center;">
-                                <input type="submit" class="form-control btn btn-info" name="clear" id="clear" value="Clear" style="margin-bottom:10px; color:white">
-                                <!-- <input name="pro_id" value="2" type="hidden">
-                                <input  value="30" type="hidden"> -->
-                            </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
 </section>
  
 <!-- Start of Footer area -->
-<script type="text/javascript">
-    $(function(){
-     $('#clear').click(function(){
-       $("#submitForm")[0].reset();
-     });
-    });
-</script>
-
 <script>
     $(function() {
 
@@ -2094,119 +1993,6 @@ $('html, body').animate({scrollTop: $('#move-down').offset().top -50 }, 'slow');
 });
 
 </script>
-<script src="assets/js/jquery-ui.min.js"></script>
-<link href="assets/css/jquery1-ui.css" type="text/css" rel="stylesheet" />
-
-<style>
-/* Book Now datepicker: shade available dates light green */
-.ui-datepicker td.available-date a.ui-state-default {
-    background: #d9f7d9 !important;
-    border: 1px solid #9ad69a !important;
-    color: #1f4d1f !important;
-}
-.ui-datepicker td.available-date a.ui-state-default:hover {
-    background: #c6f0c6 !important;
-    border-color: #7bc87b !important;
-}
-</style>
-
-
-
-<script type="text/javascript">
-
-window.__HALBACH_BLOCKED_DATES_SET__ = window.__HALBACH_BLOCKED_DATES_SET__ || new Set();
-
-    $(function() {
-        $("#txtFrom").datepicker({
-            numberOfMonths: 1,
-            minDate: 0,
-            dateFormat: 'yy-mm-dd',
-            beforeShowDay: function(date) {
-                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                var isBlocked = window.__HALBACH_BLOCKED_DATES_SET__.has(string);
-                return [!isBlocked, isBlocked ? "" : "available-date"];
-
-            },
-
-            onSelect: function(selected) {
-                var dt = new Date(selected);
-                dt.setDate(dt.getDate() + 1);
-                $("#txtTo").datepicker("option", "minDate", dt);
-                $("#txtTo").val('');
-            },
-            onClose: function() {
-                $("#txtTo").datepicker("show");
-            }
-        });
-
-        $("#txtTo").datepicker({
-            numberOfMonths: 1,
-            dateFormat: 'yy-mm-dd',
-            beforeShowDay: function(date) {
-
-                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-
-                var isBlocked = window.__HALBACH_BLOCKED_DATES_SET__.has(string);
-                return [!isBlocked, isBlocked ? "" : "available-date"]
-
-            },
-
-            onSelect: function(selected) {
-                var dt = new Date(selected);
-                dt.setDate(dt.getDate() - 1);
-                $("#txtFrom").datepicker("option", "maxDate", dt);
-
-            },
-            onClose: function() {
-                $('.popover-1').addClass('opened');
-            }
-        });
-
-        function setAvailabilityStatus(text) {
-            var $el = $("#availability-status");
-            if ($el.length) $el.text(text);
-        }
-
-        function applyBlockedDates(dateStrings) {
-            window.__HALBACH_BLOCKED_DATES_SET__ = new Set(dateStrings || []);
-
-            if ($("#txtFrom").data("datepicker")) $("#txtFrom").datepicker("refresh");
-            if ($("#txtTo").data("datepicker")) $("#txtTo").datepicker("refresh");
-            if (window.__HALBACH_UPDATE_CALENDARS__) window.__HALBACH_UPDATE_CALENDARS__();
-        }
-
-        function loadAvailabilityFromIcal() {
-            setAvailabilityStatus("Loading live availability…");
-            $.getJSON("/api/availability?monthsForward=18")
-                .done(function(data) {
-                    var blocked = (data && data.blockedDates) ? data.blockedDates : [];
-                    applyBlockedDates(blocked);
-                    var lastBlocked = blocked.length ? blocked[blocked.length - 1] : null;
-                    var feedMax = (data && data.feedMaxEndExclusive) ? data.feedMaxEndExclusive : null;
-                    var rangeEnd = (data && data.rangeEndExclusive) ? data.rangeEndExclusive : null;
-
-                    var msg = "Live availability loaded (" + blocked.length + " blocked days)";
-                    if (lastBlocked) msg += " • last blocked: " + lastBlocked;
-                    if (feedMax) msg += " • feed through: " + feedMax;
-
-                    // If the feed doesn't contain events out to the requested horizon, call it out explicitly
-                    if (feedMax && rangeEnd && feedMax < rangeEnd) {
-                        msg += " • no iCal events beyond " + feedMax;
-                    }
-
-                    setAvailabilityStatus(msg);
-                })
-                .fail(function() {
-                    setAvailabilityStatus("Unable to load live availability right now.");
-                });
-        }
-
-        loadAvailabilityFromIcal();
-    });
-	
-</script> 
-
-
 
 </body>
 <!-- Designed by Neeraj Sharma -->
@@ -2218,31 +2004,10 @@ scrollTop: $("#myDiv").offset().top -100
 });
 </script>
 <script>
- $(function(){
-	 $('.home-form').on('click',function(){
-		
-		 if($('#txtFrom').val() == ''){
-			$('#txtFrom').focus(); 
-			
-		 }else{
-			 $(this).parents('form').submit();
-		 }
-	 })
- })
- </script>
-
-<script>
 $("#onebottom").click(function() {
     $('html, body').animate({
         scrollTop: $("#myDiv1").offset().top -100
     }, 1000);
-});
-
-
-$('#mob-book').click(function(){
-  $('html, body').animate({
-    scrollTop: $("#write_review").offset().top +300
-  }, 1000);
 });
 
 </script>
