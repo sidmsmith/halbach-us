@@ -1,6 +1,6 @@
 # Halbach rates API (Neon)
 
-Serves nightly rates from Neon Postgres for the static `rates.html` calendar.
+Serves nightly rates from Neon Postgres for the static `availability.html` calendar.
 
 ## Setup
 
@@ -26,7 +26,7 @@ node scripts/import-rates.js "C:\path\to\rates.csv"
 npm start
 ```
 
-Open http://localhost:3000/rates.html — the calendar fetches `http://localhost:3000/api/rates`.
+Open http://localhost:3000/availability.html — the calendar fetches `http://localhost:3000/api/rates`.
 
 ## API
 

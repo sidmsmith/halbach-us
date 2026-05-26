@@ -23,5 +23,5 @@ app.use(express.static(staticRoot));
 app.listen(PORT, () => {
   console.log('Halbach rates API + static site at http://localhost:' + PORT);
   console.log('Rates endpoint: http://localhost:' + PORT + '/api/rates?from=2026-06-01&to=2027-12-31');
-  console.log('Open rates page: http://localhost:' + PORT + '/rates.html');
+  console.log('Open availability page: http://localhost:' + PORT + '/availability.html');
 });

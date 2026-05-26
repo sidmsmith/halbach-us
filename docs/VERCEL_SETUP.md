@@ -42,7 +42,7 @@ Plumlee scraping uses **Playwright**, which does not run reliably on Vercel serv
 
 | URL | Purpose |
 |-----|---------|
-| `/rates.html` | Rates calendar + pricing |
+| `/availability.html` | Availability calendar + pricing (`/rates.html` redirects here) |
 | `GET /api/rates?from=&to=` | Nightly rates from Neon |
 | `GET /api/availability?from=&to=` | Blocked dates + last sync time |
 | `POST /api/availability/sync` | On Vercel: starts GitHub workflow. Locally: runs Playwright sync |
