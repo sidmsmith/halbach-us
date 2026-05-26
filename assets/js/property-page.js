@@ -11,6 +11,8 @@
 
   var ratesMap = {};
   var blockedSet = {};
+  /** First visible month (left calendar), { y, m }; null until first render. */
+  var availabilityViewStartYM = null;
 
   function pad(n) {
     return n < 10 ? '0' + n : String(n);
@@ -284,23 +286,108 @@
     return card;
   }
 
+  function ymFromDate(d) {
+    return { y: d.getFullYear(), m: d.getMonth() };
+  }
+
+  function compareYM(a, b) {
+    if (a.y !== b.y) {
+      return a.y < b.y ? -1 : 1;
+    }
+    if (a.m !== b.m) {
+      return a.m < b.m ? -1 : 1;
+    }
+    return 0;
+  }
+
+  function addMonthsYM(ym, delta) {
+    var d = new Date(ym.y, ym.m + delta, 1);
+    return { y: d.getFullYear(), m: d.getMonth() };
+  }
+
+  function clampYM(ym, minYm, maxYm) {
+    if (compareYM(ym, minYm) < 0) {
+      return { y: minYm.y, m: minYm.m };
+    }
+    if (compareYM(ym, maxYm) > 0) {
+      return { y: maxYm.y, m: maxYm.m };
+    }
+    return { y: ym.y, m: ym.m };
+  }
+
+  function getAvailabilityMinLeftYM() {
+    return ymFromDate(parseDate(FETCH_FROM));
+  }
+
+  function getAvailabilityMaxLeftYM() {
+    var end = parseDate(FETCH_TO);
+    var d = new Date(end.getFullYear(), end.getMonth() - 1, 1);
+    return { y: d.getFullYear(), m: d.getMonth() };
+  }
+
   function renderAvailabilityCalendars() {
     var host = document.getElementById('property-availability-calendars');
     if (!host) {
       return;
     }
 
-    var now = new Date();
-    var monthA = { year: now.getFullYear(), month: now.getMonth() };
-    var next = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-    var monthB = { year: next.getFullYear(), month: next.getMonth() };
+    var minYM = getAvailabilityMinLeftYM();
+    var maxLeftYM = getAvailabilityMaxLeftYM();
+
+    if (compareYM(minYM, maxLeftYM) > 0) {
+      host.innerHTML = '';
+      return;
+    }
+
+    if (!availabilityViewStartYM) {
+      var now = new Date();
+      availabilityViewStartYM = clampYM(
+        { y: now.getFullYear(), m: now.getMonth() },
+        minYM,
+        maxLeftYM
+      );
+    } else {
+      availabilityViewStartYM = clampYM(availabilityViewStartYM, minYM, maxLeftYM);
+    }
+
+    var monthA = availabilityViewStartYM;
+    var monthB = addMonthsYM(monthA, 1);
 
     var grid = document.createElement('div');
     grid.className = 'rates-year-grid';
-    grid.appendChild(buildMonth(monthA.year, monthA.month));
-    grid.appendChild(buildMonth(monthB.year, monthB.month));
+    grid.appendChild(buildMonth(monthA.y, monthA.m));
+    grid.appendChild(buildMonth(monthB.y, monthB.m));
+
+    var prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'property-availability-nav property-availability-nav--prev';
+    prevBtn.setAttribute('aria-label', 'Previous months');
+    prevBtn.textContent = '\u2039';
+    prevBtn.hidden = compareYM(availabilityViewStartYM, minYM) <= 0;
+    prevBtn.addEventListener('click', function () {
+      availabilityViewStartYM = addMonthsYM(availabilityViewStartYM, -1);
+      renderAvailabilityCalendars();
+    });
+
+    var nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'property-availability-nav property-availability-nav--next';
+    nextBtn.setAttribute('aria-label', 'Next months');
+    nextBtn.textContent = '\u203a';
+    nextBtn.hidden = compareYM(availabilityViewStartYM, maxLeftYM) >= 0;
+    nextBtn.addEventListener('click', function () {
+      availabilityViewStartYM = addMonthsYM(availabilityViewStartYM, 1);
+      renderAvailabilityCalendars();
+    });
+
+    var row = document.createElement('div');
+    row.className = 'property-availability-calendars-row';
+    row.appendChild(prevBtn);
+    row.appendChild(grid);
+    row.appendChild(nextBtn);
+
     host.innerHTML = '';
-    host.appendChild(grid);
+    host.appendChild(row);
   }
 
   function loadData() {
