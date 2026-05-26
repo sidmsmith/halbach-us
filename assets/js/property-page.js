@@ -119,7 +119,15 @@
     return 'Rental Period';
   }
 
-  function buildWeeklyRateRows(rates) {
+  function averageWeekly(totals) {
+    var sum = 0;
+    for (var i = 0; i < totals.length; i++) {
+      sum += totals[i];
+    }
+    return Math.round(sum / totals.length);
+  }
+
+  function buildSaturdayWeeks(rates) {
     var dateKeys = Object.keys(rates).sort();
     if (!dateKeys.length) {
       return [];
@@ -150,35 +158,45 @@
       cursor = addDays(cursor, 7);
     }
 
+    return weeks;
+  }
+
+  function buildSeasonSummaryRows(rates) {
+    var weeks = buildSaturdayWeeks(rates);
     if (!weeks.length) {
       return [];
     }
 
     var rows = [];
+    var groupLabel = inferSeasonLabel(weeks[0].start, weeks[0].end);
     var groupStart = weeks[0].start;
     var groupEnd = weeks[0].end;
-    var groupWeekly = weeks[0].weekly;
+    var weekTotals = [weeks[0].weekly];
 
     for (var w = 1; w < weeks.length; w++) {
-      if (weeks[w].weekly === groupWeekly) {
+      var label = inferSeasonLabel(weeks[w].start, weeks[w].end);
+      if (label === groupLabel) {
         groupEnd = weeks[w].end;
+        weekTotals.push(weeks[w].weekly);
       } else {
         rows.push({
-          label: inferSeasonLabel(groupStart, groupEnd),
+          label: groupLabel,
           start: groupStart,
           end: groupEnd,
-          weekly: groupWeekly
+          weekly: averageWeekly(weekTotals)
         });
+        groupLabel = label;
         groupStart = weeks[w].start;
         groupEnd = weeks[w].end;
-        groupWeekly = weeks[w].weekly;
+        weekTotals = [weeks[w].weekly];
       }
     }
+
     rows.push({
-      label: inferSeasonLabel(groupStart, groupEnd),
+      label: groupLabel,
       start: groupStart,
       end: groupEnd,
-      weekly: groupWeekly
+      weekly: averageWeekly(weekTotals)
     });
 
     return rows;
@@ -190,7 +208,7 @@
       return;
     }
 
-    var rows = buildWeeklyRateRows(ratesMap);
+    var rows = buildSeasonSummaryRows(ratesMap);
     if (!rows.length) {
       tbody.innerHTML =
         '<tr><td colspan="2">Rate schedule is not available right now. Please see our <a href="availability.html">Availability page</a>.</td></tr>';
@@ -208,7 +226,7 @@
           ' - ' +
           formatDisplayDate(row.end) +
           '<br> ( Minimum 7 Night stay )</td>' +
-          '<td data-label="Weekly" class="ratelist-3" style="font-size: 16px;vertical-align: middle;padding-bottom: 30px;">' +
+          '<td data-label="Average Weekly Cost" class="ratelist-3" style="font-size: 16px;vertical-align: middle;padding-bottom: 30px;">' +
           formatCurrency(row.weekly) +
           '</td>' +
           '</tr>'

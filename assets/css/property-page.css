@@ -1,5 +1,12 @@
 /* Property page — read-only availability preview & overview */
 
+.quote-box.dt {
+  display: none;
+  background: #f7f7f7;
+  padding: 20px 18px 20px 30px;
+  margin-top: 20px;
+}
+
 .property-overview-text {
   height: auto !important;
   overflow: visible !important;
